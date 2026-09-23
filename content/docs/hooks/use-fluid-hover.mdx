@@ -1,0 +1,67 @@
+---
+title: useFluidHover
+description: Headless proximity tracking for custom lists and grids.
+---
+
+import { FluidListDemo } from "@/examples/foundations/fluid-hover";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+useFluidHover is the geometry and pointer-tracking part of [Fluid Hover](/docs/foundations/fluid-hover). It tells you which registered item is nearest and where that item's rectangle sits inside the container. It renders nothing.
+
+A normal list can rely on each item's CSS hover state. A highlight that travels across the whole group needs a shared view of every item's position, including the spaces between them. Keeping that work in a hook avoids rebuilding measurement, pointer tracking, and cleanup for each menu, grid, or custom list.
+
+## When to use it
+
+Use this hook when you are building your own interactive group. Use the Foundation's existing demos and highlight when you only need the standard presentation. You do not need this hook just to color a single button on hover.
+
+Register the actual target elements, attach the returned handlers to the positioned container, and render the highlight separately. The returned active index is transient hover state, not your selected value. Keep selection in your own state and leave keyboard navigation to semantic controls or Base UI.
+
+The preview is deliberately made from ordinary buttons. Move between rows, click one, then Tab through the buttons: pointer feedback and actual activation remain separate.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidListDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-fluid-hover.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useFluidHover } from "@/hooks/use-fluid-hover";
+
+const ref = useRef<HTMLDivElement>(null);
+const hover = useFluidHover(ref, { axis: "y", gapClick: false });
+// Spread hover.handlers on the container.
+// Register each item with hover.registerItem(index, node).
+// Render <FluidHoverHighlight hover={hover} /> separately.
+```
+
+## API Reference
+
+| API                            | Type                             | Behavior / default                                    |
+| ------------------------------ | -------------------------------- | ----------------------------------------------------- |
+| `containerRef`                 | `RefObject<HTMLElement \| null>` | `Positioned container`                                |
+| `options.axis`                 | `x, y, xy`                       | `y`                                                   |
+| `options.isItemDisabled`       | `(element) => boolean`           | `Disabled and hidden items are skipped automatically` |
+| `options.gapClick`             | `boolean or { maxDistance }`     | `true`                                                |
+| `activeIndex / setActiveIndex` | `number or null / setter`        | `Current nearest item; no focus movement`             |
+| `itemRects / isMeasured`       | `Record of rects / boolean`      | `Measured in container coordinates`                   |
+| `registerItem(index, node)`    | `Callback`                       | `Register or unregister an item`                      |
+| `remeasure / measureItems`     | `Functions`                      | `Scheduled or immediate measurement`                  |
+| `handlers`                     | `Pointer handlers and onClick`   | `Spread onto the container`                           |
+| `sessionRef`                   | `RefObject<number>`              | `New pointer entry starts a fresh highlight`          |
+
+## Behavior
+
+The interactive example above is a custom list built from ordinary buttons, not a menu primitive. Use x for horizontal lists, y for menus and table rows, and xy for grids. Item containment wins; otherwise the nearest center wins. Touch input leaves native scrolling and activation alone. ResizeObserver and mutation observation keep the geometry current. Register stable indexes and use a positioned container. Keyboard focus remains the responsibility of your semantic controls or Base UI. See [Fluid Hover](/docs/foundations/fluid-hover) for all three layouts.
+
+## Implementation
+
+<ComponentSource src="hooks/use-fluid-hover.ts" />

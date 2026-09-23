@@ -1,0 +1,59 @@
+---
+title: Surfaces
+description: Keep nested cards, dialogs, and menus distinct from their substrate.
+---
+
+import { SurfacesDemo } from "@/examples/foundations/surfaces";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+A surface is the background on which a piece of UI sits. Its **substrate** is the surface underneath it. A card sits on a page; a popover may sit above that card; a menu may open from inside the popover.
+
+A fixed overlay color cannot describe all of those relationships. A menu with the same background as its dialog can blend into it, especially in dark mode. Adding a shadow helps define an edge, but does not by itself make the two bodies distinct.
+
+## Elevation is relative
+
+Instead of asking a component to always use one background, this foundation asks it to move a number of levels above its parent. The page starts at 1. A dialog opened from that page advances by 4 to level 5; its popover advances by 2 to level 7; the popover's menu reaches the maximum level, 8.
+
+React context carries that level through portals. Although the popover's DOM is rendered elsewhere, it still knows which surface it belongs to. The level describes visual nesting, not CSS `z-index`, focus trapping, or modal behavior; Base UI continues to handle those interactions.
+
+Try the stack below in both themes. Open **Open dialog → Open popover → Open nested menu** and follow the level labels. In light mode, the upper colors converge on white, so borders and shadows remain important. In dark mode, the stepped backgrounds make the nesting easier to see.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/foundations/surfaces.tsx" />}>
+  <SurfacesDemo />
+</DocsPreview>
+
+## A relative surface ladder
+
+Open the dialog, then its popover, then the nested menu. Each overlay resolves its level against React context, even when Base UI portals it into the document body. In light mode the upper levels share white, with borders and shadows separating them; dark mode progressively lightens each level.
+
+## Installation
+
+Copy `lib/surface-context.tsx`, `components/ui/elevated.tsx`, and the `--surface-1` through `--surface-8` light/dark tokens from `styles/globals.css`.
+
+## Usage
+
+```tsx
+<SurfaceProvider value={1}>
+  <Elevated offset={1}>
+    Card
+    <Elevated offset={2}>Popover surface</Elevated>
+  </Elevated>
+</SurfaceProvider>
+```
+
+Use `render` to apply a surface to an existing primitive without an extra wrapper. Card advances by 1, Popover/Select/Menu by 2, and Dialog by 4. These offsets are relative, not fixed `bg-popover` values.
+
+## API Reference
+
+| API                   | Meaning                                 |
+| --------------------- | --------------------------------------- |
+| SurfaceProvider value | Establish the substrate, clamped to 1–8 |
+| useSurface()          | Read the current level                  |
+| Elevated offset       | Steps above the parent; default 1       |
+| Elevated render       | Compose with a single child element     |
+| surfaceStyle(level)   | Background using the matching token     |
+
+Levels saturate at 8; borders and shadows remain visible at the ceiling. Theme colors follow the starter's existing root dark class.

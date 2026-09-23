@@ -1,0 +1,58 @@
+---
+title: useClipboard
+description: Copy text with success feedback, errors, and a reset timer.
+---
+
+import { ClipboardDemo } from "@/examples/hooks/clipboard";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Copying is an asynchronous action, not an immediate guarantee. A browser can reject a clipboard write, and a button that always says “Copied” can report success even when nothing was copied.
+
+useClipboard combines the write with its feedback state: `copy` performs the request, `copied` becomes true after success, and `error` explains a failure. A reset timer returns the control to its normal label so it is ready for the next copy.
+
+## Feedback belongs to the result
+
+Use it for a copyable input, an install command, or a code block. Start the write from a user action and display success only from the returned state. This hook writes text; it does not read the clipboard or handle image copying.
+
+Repeated copies restart the success interval. A late result from an older request cannot overwrite a newer request's feedback. Browser security requirements still apply, so failure should remain visible rather than being silently treated as success.
+
+Edit the text below, copy it, and watch the feedback reset. The Docs' code-copy controls share this implementation through the existing compatibility hook.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/hooks/clipboard.tsx" />}>
+  <ClipboardDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-clipboard.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useClipboard } from "@/hooks/use-clipboard";
+
+const { copy, copied, error } = useClipboard({ timeout: 2000 });
+<Button onClick={() => void copy("Hello")}>
+  {copied ? "Copied" : "Copy"}
+</Button>;
+```
+
+## API Reference
+
+| API          | Type               | Behavior / default                         |
+| ------------ | ------------------ | ------------------------------------------ |
+| `timeout`    | `number`           | `2000ms; 0 keeps the success state`        |
+| `copy(text)` | `Promise<boolean>` | `true after the browser accepts the write` |
+| `copied`     | `boolean`          | `Current success state`                    |
+| `error`      | `Error or null`    | `Last copy failure`                        |
+
+## Behavior
+
+The editable input above is an InputCopy-style example. The Code tabs and the Docs' existing CopyButton use the same implementation through useCopyToClipboard. Clipboard writes require a secure context such as HTTPS or localhost and browser permission. A newer request supersedes stale async results. Timers are reset on repeated copies and cleared on unmount.
+
+## Implementation
+
+<ComponentSource src="hooks/use-clipboard.ts" />

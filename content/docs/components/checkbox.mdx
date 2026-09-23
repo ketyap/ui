@@ -1,0 +1,39 @@
+---
+title: Checkbox
+description: A standalone checkbox with a drawn check and mixed state.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { CheckboxDemo } from "@/examples/components/checkbox";
+
+## Preview
+
+<ComponentPreview src="examples/components/checkbox.tsx">
+  <CheckboxDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/checkbox.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/checkbox.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/checkbox.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/checkbox.json`}
+/>
+
+## Usage
+
+```tsx
+import { CheckboxItem } from "@/components/ui/checkbox";
+
+<CheckboxItem name="terms" label="Accept terms" required />;
+```
+
+## API Reference
+
+`CheckboxItem` combines `Checkbox` with a `label` and optional `description`. Its entire row receives the selected or mixed background. CheckboxGroup uses this same component. Use `Checkbox` directly when only the small checkbox control is needed.
+
+`checked` / `defaultChecked`: boolean. `onCheckedChange` receives the next boolean and Base UI event details. `indeterminate` controls the mixed state separately. `size`: default or compact, inherited from SizeProvider when omitted. `disabled`, `readOnly`, `required`, `name`, `value`, `inputRef` and ARIA props follow Base UI. Use a wrapping label or `aria-label`. Space toggles the focused checkbox. Reduced motion skips the check drawing transition.
+
+The outline, size and check color match CheckboxGroup. The drawn-check animation is inspired by [Nexvyn Checkbox](https://ui.nexvyn.dev/components/checkbox), using Ketyap UI motion.

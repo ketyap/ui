@@ -1,0 +1,52 @@
+---
+title: Introduction
+description: React components built on Base UI, with shared foundations for motion, appearance, and interaction.
+---
+
+**Ketyap UI** is a collection of React components distributed as source code through the shadcn registry. Add the components you need to your project, then customize their code, styling, and behavior.
+
+## Base UI only
+
+Ketyap UI supports **Base UI only**. Interactive primitives use `@base-ui/react`, and your shadcn configuration must use a `base-*` style. There is no Radix UI version or compatibility layer for Radix-based shadcn components.
+
+Component names may be familiar, but their props and composition are specific to Ketyap UI and Base UI. Use the examples and API reference on each component page when integrating them. Components that support replacing their rendered element use Base UI's `render` prop. Custom wrappers compose props with `useRender` and `mergeProps`.
+
+If you already use Radix-based shadcn components, review the affected imports, props, and composition before replacing them. Installing a registry item does not migrate existing call sites.
+
+## Project setup
+
+The current source uses **React 19, TypeScript, and Tailwind CSS 4**. Set up shadcn, your import aliases, and the global theme styles before adding components. Interactive components run on the client; keep their client boundaries when using React Server Components.
+
+Registry items declare their npm dependencies and include the shared Foundation and Hook files they need. Depending on the component, these include Motion, Lucide icons, and sound or haptic feedback helpers. Review the installation changes, including shared files and styles, when adding an item to an existing project.
+
+## Your source to customize
+
+Components are copied into your project rather than consumed from a single Ketyap UI runtime package. You control the installed source and any changes you make to it. Upstream changes are not applied automatically; review updates before overwriting local customizations.
+
+Shared files can be used by several components. Editing a size, shape, surface, or motion foundation can affect every component that consumes it.
+
+## Components
+
+Start with [Button](/docs/components/button), compose forms with [InputGroup](/docs/components/input-group), or explore [DropdownMenu](/docs/components/dropdown-menu) and [Dialog](/docs/components/dialog).
+
+Each component page includes interactive examples, installation commands, usage, and an API reference. Use the examples to check states such as disabled, loading, selection, and nested overlays where available.
+
+## Foundations and Hooks
+
+[Foundations](/docs/foundations/motion) coordinate motion, sizes, surfaces, shape, scrollbars, fluid hover, and icons. Their providers let you customize shared behavior for a region of your interface. [Hooks](/docs/hooks/use-fluid-hover) provide reusable state and interaction helpers.
+
+See the individual Foundation pages for setup and provider usage. For Motion-based animations, use `MotionProvider` to respect the user's reduced-motion preference.
+
+## Accessibility
+
+Base UI provides the underlying keyboard interaction, focus handling, and accessibility semantics for interactive primitives. Your application still needs meaningful labels, appropriate descriptions, and correct component composition. Give icon-only controls an accessible name and associate form controls with their labels and error messages.
+
+After customizing a component, verify keyboard navigation, visible focus, contrast, and reduced-motion behavior in your application.
+
+## Get started
+
+Follow the [installation guide](/docs/installation), then add the components you need. Source code is available at [ketyap/ui](https://github.com/ketyap/ui).
+
+## Credits
+
+The documentation site started from the MIT-licensed [startercn](https://github.com/shadcn-labs/startercn) template.

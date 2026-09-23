@@ -1,0 +1,59 @@
+---
+title: Motion
+description: A shared spring language for feedback, transitions, and layout.
+---
+
+import { MotionDemo } from "@/examples/foundations/motion";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Motion is the shared timing language of the interface. A hover highlight, a selected tab, and an opening panel describe different changes, but they should feel like parts of the same system.
+
+When each component chooses its own duration and easing, small actions can feel slower than large ones, and related controls can move at visibly different speeds. This foundation gives those decisions names: **fast** for immediate feedback, **moderate** for short, precise movement, and **slow** for larger spatial changes. Components choose the purpose of the movement instead of inventing another set of numbers.
+
+## Choosing a motion
+
+Use the fast spring when the user is already moving, such as a highlight following the pointer. Use moderate for an indicator that needs to settle clearly on a selected tab. Use slow when a larger surface entering the screen needs a little more time to be understood. Exits are shorter because the user has already decided to dismiss the content.
+
+These presets coordinate movement; they do not animate every element automatically. Keep static content static, and preserve the same information when reduced motion removes travel.
+
+Try **Move presets** to compare the three responses over the same distance. **Exit / Enter** shows why leaving and arriving use different transitions.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/foundations/motion.tsx" />}>
+  <MotionDemo />
+</DocsPreview>
+
+## Presets
+
+| Preset   | Enter | Bounce | Exit  | Use                                 |
+| -------- | ----- | ------ | ----- | ----------------------------------- |
+| fast     | 80ms  | 0      | 60ms  | Hover highlights, icon feedback     |
+| moderate | 160ms | 0      | 120ms | Active indicators, popovers, layout |
+| slow     | 240ms | 0.12   | 160ms | Larger panels and spatial changes   |
+
+Entrances use springs. Exits use the shorter tween on each preset's `exit` property.
+
+## Installation
+
+Copy `lib/motion.ts` and `components/motion-provider.tsx` into your project and install `motion`. The starter already includes both.
+
+## Usage
+
+```tsx
+import { motion } from "motion/react";
+import { spring, motionPresets } from "@/lib/motion";
+
+<motion.div layout transition={motionPresets.layout} />
+<motion.div {...motionPresets.enter} exit={motionPresets.exit} />
+<motion.span transition={spring.fast} animate={{ opacity: 1 }} />
+```
+
+## Reduced motion
+
+`MotionProvider` wraps MotionConfig with `reducedMotion="user"`. Motion disables transform and layout travel while preserving opacity feedback. Standalone FluidHoverHighlight also reads the OS preference so it works outside that provider. Use `useReducedMotion` for non-Motion behavior, not to create another animation loop.
+
+## API Reference
+
+`spring.fast | moderate | slow` expose Motion transitions and matching `exit` transitions. `motionPresets` contains `enter`, `exit`, `hover`, `activeIndicator`, `layout`, `fade`, and `snap`. CSS consumers use matching `--motion-*` variables.

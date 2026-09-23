@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "Tooltip with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "content": "\"use client\";\n\nimport { Tooltip as Primitive } from \"@base-ui/react/tooltip\";\nimport type { ComponentProps } from \"react\";\n\nimport { useShape } from \"@/lib/shape-context\";\nimport { useSurface } from \"@/lib/surface-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport const TooltipProvider = ({\n  delay = 200,\n  ...props\n}: ComponentProps<typeof Primitive.Provider>) => (\n  <Primitive.Provider delay={delay} {...props} />\n);\nexport const Tooltip = Primitive.Root;\nexport const TooltipTrigger = Primitive.Trigger;\n\nexport const TooltipContent = ({\n  className,\n  children,\n  side = \"top\",\n  align = \"center\",\n  sideOffset = 8,\n  alignOffset,\n  collisionPadding = 8,\n  anchor,\n  ...props\n}: ComponentProps<typeof Primitive.Popup> &\n  Pick<\n    ComponentProps<typeof Primitive.Positioner>,\n    | \"side\"\n    | \"align\"\n    | \"sideOffset\"\n    | \"alignOffset\"\n    | \"collisionPadding\"\n    | \"anchor\"\n  >) => {\n  const shape = useShape();\n  const surface = useSurface();\n  return (\n    <Primitive.Portal>\n      <Primitive.Positioner\n        side={side}\n        align={align}\n        sideOffset={sideOffset}\n        alignOffset={alignOffset}\n        collisionPadding={collisionPadding}\n        anchor={anchor}\n        style={{ zIndex: 50 + surface }}\n      >\n        <Primitive.Popup\n          data-slot=\"tooltip-content\"\n          className={cn(\n            \"w-fit max-w-xs bg-foreground px-2 py-1 text-xs text-background origin-(--transform-origin) transition-[opacity,transform] duration-(--motion-fast) data-[ending-style]:duration-(--motion-exit-fast) data-[starting-style]:opacity-0 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[ending-style]:scale-95 motion-reduce:transition-none\",\n            shape,\n            className\n          )}\n          {...props}\n        >\n          {children}\n        </Primitive.Popup>\n      </Primitive.Positioner>\n    </Primitive.Portal>\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "lib/surface-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { CSSProperties, ReactNode } from \"react\";\n\nconst SurfaceContext = createContext(1);\nexport const clampSurface = (level: number) =>\n  Number.isFinite(level) ? Math.max(1, Math.min(8, Math.round(level))) : 1;\nexport const useSurface = () => useContext(SurfaceContext);\nexport const SurfaceProvider = ({\n  value,\n  children,\n}: {\n  value: number;\n  children: ReactNode;\n}) => (\n  <SurfaceContext.Provider value={clampSurface(value)}>\n    {children}\n  </SurfaceContext.Provider>\n);\nexport const surfaceStyle = (level: number): CSSProperties => ({\n  backgroundColor: `var(--surface-${clampSurface(level)})`,\n});\n",
+      "type": "registry:lib",
+      "target": "lib/surface-context.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "motion-exit-fast": "60ms",
+      "motion-fast": "80ms",
+      "surface-1": "#fafafa",
+      "surface-2": "#fcfcfc",
+      "surface-3": "#fff",
+      "surface-4": "#fff",
+      "surface-5": "#fff",
+      "surface-6": "#fff",
+      "surface-7": "#fff",
+      "surface-8": "#fff"
+    },
+    "dark": {
+      "surface-1": "#171717",
+      "surface-2": "#1e1e1e",
+      "surface-3": "#252525",
+      "surface-4": "#2c2c2c",
+      "surface-5": "#333",
+      "surface-6": "#3a3a3a",
+      "surface-7": "#414141",
+      "surface-8": "#484848"
+    }
+  },
+  "type": "registry:ui"
+}

@@ -1,0 +1,44 @@
+---
+title: Input
+description: A standalone text input that integrates with Base UI Field.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { InputDemo } from "@/examples/components/input";
+import { InputFieldDemo } from "@/examples/components/input-field";
+
+## Preview
+
+### States and sizes
+
+<ComponentPreview src="examples/components/input.tsx">
+  <InputDemo />
+</ComponentPreview>
+
+### Label and validation
+
+<ComponentPreview src="examples/components/input-field.tsx">
+  <InputFieldDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/input.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/input.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/input.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/input.json`}
+/>
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+
+<Input aria-label="Email" type="email" placeholder="you@example.com" />;
+```
+
+## API Reference
+
+`value` / `defaultValue`, `onChange`, `onValueChange`, `disabled`, `readOnly`, `required`, `type` and native input attributes follow Base UI Input. `density`: default or compact, inherited from SizeProvider when omitted. `shape`: rounded or pill, inherited from ShapeProvider. Native `size` remains the character-width attribute. Use a label or `aria-label`; descriptions and validation messages can be connected through Base UI Field. For prefixes, suffixes and addons, use [InputGroup](/docs/components/input-group).

@@ -1,0 +1,68 @@
+---
+title: useAutoResizeTextarea
+description: Grow a composer to its content and scroll after its maximum height.
+---
+
+import { AutoResizeTextareaDemo } from "@/examples/hooks/auto-resize-textarea";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+A message composer should give a short message little space and a longer draft enough room to edit. A fixed-height textarea either wastes room when empty or starts scrolling before the user can see their draft.
+
+useAutoResizeTextarea adjusts the textarea's height to its content within a minimum and maximum. Once the maximum is reached, the textarea keeps that height and uses native scrolling, so a long message cannot push the rest of the interface away.
+
+## Growth has limits
+
+Use it for chat composers, comments, and other short-to-medium free-form input. A large document editor may be better served by its own layout. The hook only sizes the native textarea; it does not handle submission, keyboard shortcuts, validation, or rich text.
+
+Pass the controlled `value` when drafts can change programmatically. User input and width changes are observed too, because wrapping can change the required height without changing the text. For an imperative value change outside React, call `resize()`.
+
+Type several lines below, load a draft, then send it. The field should grow, switch to scrolling at its limit, and shrink again when cleared.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/hooks/auto-resize-textarea.tsx" />}
+>
+  <AutoResizeTextareaDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-auto-resize-textarea.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useAutoResizeTextarea } from "@/hooks/use-auto-resize-textarea";
+
+const [value, setValue] = useState("");
+const { ref, resize } = useAutoResizeTextarea({
+  value,
+  minHeight: 64,
+  maxHeight: 180,
+});
+<textarea
+  ref={ref}
+  value={value}
+  onChange={(event) => setValue(event.target.value)}
+/>;
+```
+
+## API Reference
+
+| API         | Type                  | Behavior / default                                      |
+| ----------- | --------------------- | ------------------------------------------------------- |
+| `value`     | `string or undefined` | `Pass controlled content to track programmatic changes` |
+| `minHeight` | `number`              | `44px`                                                  |
+| `maxHeight` | `number`              | `240px; never below minHeight`                          |
+| `ref`       | `Callback ref`        | `Attach to a textarea`                                  |
+| `resize()`  | `Function`            | `Recalculate after an imperative content change`        |
+
+## Behavior
+
+Input events, controlled value updates, and width changes recalculate the height. The textarea uses border-box measurements, preserving borders and padding, and switches to native vertical overflow at the limit. The demo supports loading a draft, typing, sending, and resetting. Event listeners, observers, and applied inline sizing are cleaned up.
+
+## Implementation
+
+<ComponentSource src="hooks/use-auto-resize-textarea.ts" />

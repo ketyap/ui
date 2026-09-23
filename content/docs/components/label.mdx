@@ -1,0 +1,52 @@
+---
+title: Label
+description: An accessible label associated with a control.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { LabelDemo } from "@/examples/components/label";
+
+## Preview
+
+<ComponentPreview src="examples/components/label.tsx">
+  <LabelDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/label.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/label.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/label.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/label.json`}
+/>
+
+## Usage
+
+```tsx
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+<div className="grid gap-2">
+  <Label htmlFor="email">Your email address</Label>
+  <Input id="email" type="email" />
+</div>;
+```
+
+Match `htmlFor` to the control's unique `id`. Clicking the label focuses or activates the associated control. For a disabled control, place it before the label with `className="peer"` to dim the label automatically.
+
+## Label in Field
+
+For fields with descriptions and validation, use [Base UI Field](https://base-ui.com/react/components/field) and its `Field.Label`, `Field.Description`, and `Field.Error` parts. See the [Input field example](/docs/components/input).
+
+## API Reference
+
+| Prop      | Values                             | Default      |
+| --------- | ---------------------------------- | ------------ |
+| htmlFor   | Associated control ID              | —            |
+| density   | default, compact                   | SizeProvider |
+| render    | Base UI render element or callback | label        |
+| className | string                             | —            |
+
+Accepts native label attributes and a ref. Preserve label semantics when using `render`. Text alignment follows the inherited direction, including RTL.

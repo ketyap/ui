@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "description": "Switch with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "motion@13.4.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/switch.tsx",
+      "content": "\"use client\";\n\nimport { Switch as Primitive } from \"@base-ui/react/switch\";\nimport { motion } from \"motion/react\";\nimport { useId } from \"react\";\nimport type { ComponentProps, ReactNode } from \"react\";\n\nimport { useReducedMotion } from \"@/hooks/use-reduced-motion\";\nimport { motionTransition, spring } from \"@/lib/motion\";\nimport { useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport const Switch = ({\n  size,\n  label,\n  className,\n  ...props\n}: ComponentProps<typeof Primitive.Root> & {\n  size?: SizeVariant;\n  label?: ReactNode;\n}) => {\n  const sizes = useSize(size);\n  const reduced = useReducedMotion();\n  const id = useId();\n  const compact = sizes.variant === \"compact\";\n  const thumb = compact ? 12 : 16;\n  const travel = compact ? 12 : 14;\n  return (\n    <label\n      className={cn(\n        \"inline-flex w-fit items-center gap-2 has-[[data-disabled]]:opacity-50\",\n        sizes.text\n      )}\n    >\n      <Primitive.Root\n        aria-labelledby={label ? id : undefined}\n        data-slot=\"switch\"\n        className={cn(\n          \"group relative inline-flex shrink-0 cursor-pointer rounded-full bg-foreground/15 outline-none transition-colors duration-(--motion-fast) data-[checked]:bg-[#6b97ff] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[disabled]:cursor-not-allowed\",\n          compact ? \"h-4 w-7\" : \"h-5 w-[34px]\",\n          className\n        )}\n        {...props}\n      >\n        <Primitive.Thumb\n          render={(thumbProps, state) => (\n            <span {...thumbProps} className=\"absolute top-0.5 left-0.5\">\n              <motion.span\n                className=\"block rounded-full bg-white shadow-sm\"\n                initial={false}\n                animate={{ x: state.checked ? travel : 0 }}\n                transition={motionTransition(spring.moderate, reduced)}\n                style={{ height: thumb, width: thumb }}\n              />\n            </span>\n          )}\n        />\n      </Primitive.Root>\n      {label && <span id={id}>{label}</span>}\n    </label>\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "components/ui/switch.tsx"
+    },
+    {
+      "path": "hooks/use-media-query.tsx",
+      "content": "import { useEffect, useState } from \"react\";\n\nexport const useMediaQuery = (query: string) => {\n  const [value, setValue] = useState(false);\n\n  useEffect(() => {\n    const onChange = (event: MediaQueryListEvent) => {\n      setValue(event.matches);\n    };\n\n    const result = matchMedia(query);\n    result.addEventListener(\"change\", onChange);\n    setValue(result.matches);\n\n    return () => result.removeEventListener(\"change\", onChange);\n  }, [query]);\n\n  return value;\n};\n",
+      "type": "registry:hook",
+      "target": "hooks/use-media-query.tsx"
+    },
+    {
+      "path": "hooks/use-reduced-motion.ts",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"@/hooks/use-media-query\";\n\n/** False during SSR and the first hydration render; subscribes after mounting. */\nexport const useReducedMotion = () =>\n  useMediaQuery(\"(prefers-reduced-motion: reduce)\");\n",
+      "type": "registry:hook",
+      "target": "hooks/use-reduced-motion.ts"
+    },
+    {
+      "path": "lib/motion.ts",
+      "content": "import type { Transition } from \"motion/react\";\n\n// Base UI owns presence; CSS consumers use the same timing ladder as Motion.\nexport const motionClasses = {\n  moderate:\n    \"duration-(--motion-moderate) data-[state=closed]:duration-(--motion-exit-moderate) motion-reduce:animate-none\",\n  slow: \"duration-(--motion-slow) data-[state=closed]:duration-(--motion-exit-slow) motion-reduce:animate-none\",\n};\n\n// Fluid Functionalism's timing ladder: quick feedback, precise panels, larger moves.\nexport const spring = {\n  fast: { bounce: 0, duration: 0.08, exit: { duration: 0.06 }, type: \"spring\" },\n  moderate: {\n    bounce: 0,\n    duration: 0.16,\n    exit: { duration: 0.12 },\n    type: \"spring\",\n  },\n  slow: {\n    bounce: 0.12,\n    duration: 0.24,\n    exit: { duration: 0.16 },\n    type: \"spring\",\n  },\n} as const;\n\nexport const motionPresets = {\n  activeIndicator: spring.moderate,\n  enter: {\n    animate: { opacity: 1, scale: 1 },\n    initial: { opacity: 0, scale: 0.95 },\n    transition: spring.moderate,\n  },\n  exit: { opacity: 0, scale: 0.95, transition: spring.moderate.exit },\n  fade: { duration: spring.fast.duration },\n  hover: spring.fast,\n  layout: spring.moderate,\n  snap: { duration: 0 },\n} satisfies Record<string, unknown>;\n\nexport const motionTransition = (\n  transition: Transition,\n  reduced: boolean\n): Transition =>\n  reduced ? { duration: 0, opacity: motionPresets.fade } : transition;\n",
+      "type": "registry:lib",
+      "target": "lib/motion.ts"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "motion-exit-moderate": "120ms",
+      "motion-exit-slow": "160ms",
+      "motion-fast": "80ms",
+      "motion-moderate": "160ms",
+      "motion-slow": "240ms"
+    }
+  },
+  "type": "registry:ui"
+}

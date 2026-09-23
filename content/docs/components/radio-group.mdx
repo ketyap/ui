@@ -1,0 +1,48 @@
+---
+title: RadioGroup
+description: A single choice with keyboard navigation and fluid hover.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { RadioGroupDemo } from "@/examples/components/radio-group";
+import { RadioGroupCompactDemo } from "@/examples/components/radio-group-compact";
+
+## Preview
+
+### Controlled selection
+
+<ComponentPreview src="examples/components/radio-group.tsx">
+  <RadioGroupDemo />
+</ComponentPreview>
+
+### Compact and uncontrolled
+
+<ComponentPreview src="examples/components/radio-group-compact.tsx">
+  <RadioGroupCompactDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/radio-group.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/radio-group.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/radio-group.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/radio-group.json`}
+/>
+
+## Usage
+
+```tsx
+import { RadioGroup, RadioItem } from "@/components/ui/radio-group";
+
+<RadioGroup aria-label="Schedule" defaultValue="weekly">
+  <RadioItem value="daily" label="Daily" />
+  <RadioItem value="weekly" label="Weekly" description="A weekly summary" />
+</RadioGroup>;
+```
+
+## API Reference
+
+Group accepts Base UI RadioGroup props: `value`, `defaultValue`, `onValueChange`, `disabled`, `name`. RadioItem requires `value` and `label`, with optional `description` and `disabled`. Base UI owns selection, roving focus and arrow-key navigation. Density follows SizeProvider.

@@ -1,0 +1,62 @@
+---
+title: useControllableState
+description: One state API for controlled and uncontrolled components.
+---
+
+import { ControllableStateDemo } from "@/examples/hooks/controllable-state";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+A reusable control often needs two ways to own its value. In **uncontrolled** mode it remembers its own state, starting from a default. In **controlled** mode the parent supplies the current value and decides whether to accept requested changes.
+
+For example, a standalone tab group can manage itself. A tab group synchronized with a URL or a settings form needs the parent to be the source of truth. Implementing both modes separately in every component invites subtle differences in when callbacks fire and which value is displayed.
+
+## One source of truth
+
+This hook exposes one value and setter for both modes. Without `value`, the setter updates internal state. With `value`, it calls `onChange` to request a change and waits for the parent to pass the new value. It does not optimistically keep a second copy of controlled state.
+
+Use it in custom controls that need both modes. Do not wrap a Base UI primitive merely to duplicate the state management it already provides. Keep the mode stable for the component's lifetime, and remember that `defaultValue` initializes state rather than resetting it on every render.
+
+In the preview, both counters use the same component. The parent can reset the controlled counter because it owns that counter's value.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/hooks/controllable-state.tsx" />}
+>
+  <ControllableStateDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-controllable-state.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useControllableState } from "@/hooks/use-controllable-state";
+
+const [value, setValue] = useControllableState({
+  value: controlledValue,
+  defaultValue: "overview",
+  onChange: onValueChange,
+});
+setValue((previous) => (previous === "overview" ? "activity" : "overview"));
+```
+
+## API Reference
+
+| API            | Type                               | Behavior / default                           |
+| -------------- | ---------------------------------- | -------------------------------------------- |
+| `value`        | `T or undefined`                   | `undefined means uncontrolled`               |
+| `defaultValue` | `T`                                | `Required initial value`                     |
+| `onChange`     | `(value: T) => void`               | `Called when a different value is requested` |
+| `return`       | `[T, Dispatch<SetStateAction<T>>]` | `Value and setter`                           |
+
+## Behavior
+
+The existing Tabs uses this hook. It can also drive Accordion values, Switch checked state, or any custom control. Functional setters compose in uncontrolled mode without calling side effects from React state updaters. Controlled mode requests a change from the parent and does not maintain a shadow value. Keep the controlled/uncontrolled mode stable for a component's lifetime.
+
+## Implementation
+
+<ComponentSource src="hooks/use-controllable-state.ts" />

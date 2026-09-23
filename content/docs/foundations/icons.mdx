@@ -1,0 +1,53 @@
+---
+title: Icons
+description: Replace semantic icon slots without changing the components that use them.
+---
+
+import { IconsDemo } from "@/examples/foundations/icons";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Icons gives components a vocabulary of **meaning**, rather than a dependency on a particular drawing. A select asks for a chevron-down icon; a dismiss button asks for close; a copy action asks for copy.
+
+Without that boundary, changing icon libraries means editing imports throughout the component tree. It also makes small inconsistencies easy to introduce: one close button changes while another keeps the old icon. IconProvider centralizes the choice and lets a region replace only the slots it needs.
+
+## Replace the drawing, keep the control
+
+The starter keeps Lucide as its default. Supply another SVG component for a semantic slot to change its appearance without changing the select's keyboard handling, button label, or action. Nested providers inherit unmodified slots from their parent.
+
+An icon is not an accessible name. Decorative icons stay hidden from assistive technology, and an icon-only button still needs an explicit label such as `aria-label="Close dialog"`. Replacement components should forward SVG props so sizing and accessibility attributes continue to work.
+
+Switch the icon set below, then open the select and press Save. Only the drawings change; the controls keep the same behavior.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/foundations/icons.tsx" />}>
+  <IconsDemo />
+</DocsPreview>
+
+## Installation
+
+Use `lib/icon-context.tsx`. Defaults come from the starter's existing `lucide-react` dependency. Replacement icons can come from any library or your own SVG components.
+
+## Usage
+
+```tsx
+<IconProvider icons={{ "chevron-down": MyChevron, check: MyCheck }}>
+  <Button>
+    <Icon name="check" />
+    Save
+  </Button>
+  <Select>{/* The trigger reads the same provider. */}</Select>
+</IconProvider>
+```
+
+## API Reference
+
+| API                | Meaning                                                          |
+| ------------------ | ---------------------------------------------------------------- |
+| IconProvider.icons | Partial map of semantic slot to SVG component                    |
+| Icon.name          | chevron-down, chevron-right, close, check, search, copy, loading |
+| IconProps          | SVG attributes, size, strokeWidth                                |
+| defaultIcons       | The default Lucide map                                           |
+
+Nested providers merge with their parent. Missing slots keep their inherited defaults. Decorative icons are hidden from assistive technology; name icon-only controls with `aria-label`. Components depend on a semantic slot, while the provider owns the library choice.

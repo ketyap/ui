@@ -1,0 +1,46 @@
+---
+title: Tooltip
+description: Contextual hints with keyboard focus and four placements.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { TooltipDemo } from "@/examples/components/tooltip";
+
+## Preview
+
+<ComponentPreview src="examples/components/tooltip.tsx">
+  <TooltipDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/tooltip.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/tooltip.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/tooltip.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/tooltip.json`}
+/>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+
+<TooltipProvider delay={200}>
+  <Tooltip>
+    <TooltipTrigger render={<Button />}>Save</TooltipTrigger>
+    <TooltipContent side="top">Save changes</TooltipContent>
+  </Tooltip>
+</TooltipProvider>;
+```
+
+## API Reference
+
+`Tooltip` accepts Base UI Root props including `disabled`, `open`, `defaultOpen`, and `onOpenChange`. Provider `delay` defaults to 200ms; Trigger `delay` overrides it. Content supports `side`, `align`, `sideOffset` (8px), and the Base UI Popup props. There is no arrow. Reduced motion removes transitions.

@@ -1,0 +1,63 @@
+---
+title: useScrollEdges
+description: Detect overflow and whether a scroll viewport has reached either edge.
+---
+
+import { ScrollEdgesDemo } from "@/examples/hooks/scroll-edges";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+useScrollEdges describes where a scrollable viewport is relative to its content. It answers whether there is any overflow, whether the viewport is at the beginning, and whether it has reached the end.
+
+Those are different questions. A short list can be at both ends because it does not overflow. A long list at its beginning can still have more content ahead. Keeping the distinction prevents an unnecessary fade or an enabled “next” affordance when there is nowhere to scroll.
+
+## Observe scrolling, do not replace it
+
+Use the hook to show edge fades, enable directional controls, or indicate that more content is available. The hook does not move the viewport or intercept wheel, touch, or keyboard events. [Scrollbars](/docs/foundations/scrollbars) uses it to decide which fades are needed.
+
+Attach its ref to the element that actually scrolls, not an outer wrapper. Choose the axis explicitly for a horizontal collection. A small threshold accounts for fractional scroll positions so the final pixel does not leave an end indicator stuck on.
+
+Scroll the preview from one end to the other and compare the three values. Switch the axis to see the same model used for a vertical list.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/hooks/scroll-edges.tsx" />}>
+  <ScrollEdgesDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-scroll-edges.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useScrollEdges } from "@/hooks/use-scroll-edges";
+
+const { ref, atStart, atEnd, canScroll } = useScrollEdges({
+  orientation: "horizontal",
+});
+<div ref={ref} className="overflow-auto">
+  {children}
+</div>;
+```
+
+## API Reference
+
+| API           | Type                     | Behavior / default                       |
+| ------------- | ------------------------ | ---------------------------------------- |
+| `orientation` | `horizontal or vertical` | `vertical`                               |
+| `threshold`   | `number`                 | `1px tolerance for fractional scrolling` |
+| `ref`         | `Callback ref`           | `Attach to the scrolling element`        |
+| `atStart`     | `boolean`                | `At the leading edge`                    |
+| `atEnd`       | `boolean`                | `At the trailing edge`                   |
+| `canScroll`   | `boolean`                | `Content exceeds the viewport`           |
+| `update()`    | `Function`               | `Recalculate explicitly`                 |
+
+## Behavior
+
+No overflow means both atStart and atEnd are true. The hook observes the viewport and its children, listens passively for scrolling, and checks content mutations. ScrollArea reuses it for fades. Horizontal RTL uses the magnitude of scrollLeft so logical start is handled by modern browsers' negative RTL offsets.
+
+## Implementation
+
+<ComponentSource src="hooks/use-scroll-edges.ts" />

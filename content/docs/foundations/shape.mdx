@@ -1,0 +1,50 @@
+---
+title: Shape
+description: Switch a whole set of controls between rounded and pill silhouettes.
+---
+
+import { ShapeDemo } from "@/examples/foundations/shape";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Shape is the shared silhouette of a group of controls. Rounded controls have distinct corners; pill controls have softer, capsule-like ends. Neither choice changes what a control does.
+
+Changing the radius of a button alone often leaves the adjacent input, select, and tab indicator using another visual language. ShapeProvider makes this a decision for a region rather than a collection of unrelated class overrides.
+
+## Where shape belongs
+
+Use rounded when you want controls with clearly defined corners, or pill when a softer silhouette fits the surrounding interface. The provider only affects components that participate in the foundation. It does not reshape avatars, photographs, dialogs, or every box in the document.
+
+Shape and density are independent. A compact toolbar can be rounded or pill without changing its values or keyboard behavior. Use a local override for a real exception rather than a second global radius rule.
+
+Switch **Rounded / Pill** below and watch the same input, select, buttons, and tabs change together. Their content and behavior stay the same.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/foundations/shape.tsx" />}>
+  <ShapeDemo />
+</DocsPreview>
+
+## Installation
+
+Use `lib/shape-context.tsx` with the foundation-aware controls in this starter.
+
+## Usage
+
+```tsx
+<ShapeProvider shape="pill">
+  <Button>Continue</Button>
+  <Input aria-label="Search" />
+  <Button shape="rounded">Local override</Button>
+</ShapeProvider>
+```
+
+## API Reference
+
+| API                              | Values                | Default   |
+| -------------------------------- | --------------------- | --------- |
+| ShapeProvider.shape              | rounded, pill         | required  |
+| useShape(override?)              | resolved radius class | rounded   |
+| Button/Input/SelectTrigger.shape | rounded, pill         | inherited |
+
+Rounded uses 8px corners; pill uses 20px, following the reference control geometry. Button, Input, Select, NativeSelect, Tabs, and the hover highlight inherit shape. Avatars and other intrinsically circular graphics are deliberately outside this system. Providers do not mutate document-wide styles.

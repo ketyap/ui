@@ -1,0 +1,35 @@
+---
+title: InputCopy
+description: Copy a value with animated success and failure feedback.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { InputCopyDemo } from "@/examples/components/input-copy";
+
+## Preview
+
+<ComponentPreview src="examples/components/input-copy.tsx">
+  <InputCopyDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/input-copy.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/input-copy.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/input-copy.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/input-copy.json`}
+/>
+
+## Usage
+
+```tsx
+import { InputCopy } from "@/components/ui/input-copy";
+
+<InputCopy value="https://example.com" label="Share link" variant="button" />;
+```
+
+## API Reference
+
+`value`: required string. `label`: optional text. `variant`: icon (default) or button. `align`: right (default) or left. `size`: default or compact. `disabled`: disables copying. `onCopy`: called only after a successful copy. Success resets after two seconds. Clipboard failures are announced and can be retried.

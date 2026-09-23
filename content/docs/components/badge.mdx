@@ -1,0 +1,37 @@
+---
+title: Badge
+description: Compact status labels with solid and dot appearances.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { BadgeDemo } from "@/examples/components/badge";
+
+## Preview
+
+<ComponentPreview src="examples/components/badge.tsx">
+  <BadgeDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/badge.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/badge.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/badge.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/badge.json`}
+/>
+
+## Usage
+
+```tsx
+import { Badge } from "@/components/ui/badge";
+
+<Badge variant="dot" color="green">
+  Ready
+</Badge>;
+```
+
+## API Reference
+
+`variant`: solid or dot. Existing default, secondary, outline and destructive variants remain available. `color`: the demonstrated Tailwind color names. `size`: default or compact (inherited when omitted). `icon`: an SVG component. Shape follows ShapeProvider.

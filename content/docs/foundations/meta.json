@@ -1,0 +1,12 @@
+{
+  "title": "Foundations",
+  "pages": [
+    "motion",
+    "sizes",
+    "surfaces",
+    "shape",
+    "scrollbars",
+    "fluid-hover",
+    "icons"
+  ]
+}

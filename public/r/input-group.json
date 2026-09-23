@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-group",
+  "title": "InputGroup",
+  "description": "Input group with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@1.47.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/input-group.tsx",
+      "content": "\"use client\";\n\nimport { Field } from \"@base-ui/react/field\";\nimport type { ComponentProps, ReactNode } from \"react\";\n\nimport { Input } from \"@/components/ui/input\";\nimport type { IconComponent } from \"@/lib/icon-context\";\nimport { useShape } from \"@/lib/shape-context\";\nimport { SizeProvider, useSizeVariant, useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport const InputGroup = ({\n  size,\n  className,\n  ...props\n}: ComponentProps<\"div\"> & { size?: SizeVariant }) => {\n  const density = useSizeVariant(size);\n  return (\n    <SizeProvider size={density}>\n      <div\n        className={cn(\"flex w-72 max-w-full flex-col gap-3\", className)}\n        {...props}\n      />\n    </SizeProvider>\n  );\n};\n\nexport interface InputFieldProps extends Omit<\n  ComponentProps<typeof Input>,\n  \"prefix\"\n> {\n  label: ReactNode;\n  description?: ReactNode;\n  error?: ReactNode;\n  prefix?: ReactNode;\n  suffix?: ReactNode;\n  addon?: ReactNode;\n  icon?: IconComponent;\n  labelHidden?: boolean;\n}\n\nexport const InputField = ({\n  label,\n  description,\n  error,\n  prefix,\n  suffix,\n  addon,\n  icon: FieldIcon,\n  labelHidden,\n  className,\n  disabled,\n  density,\n  shape,\n  ...props\n}: InputFieldProps) => {\n  const sizes = useSize(density);\n  const radius = useShape(shape);\n  return (\n    <Field.Root\n      disabled={disabled}\n      invalid={!!error}\n      className={cn(\"flex flex-col gap-1\", sizes.text, className)}\n    >\n      <Field.Label\n        className={cn(\"px-2.5 text-muted-foreground\", labelHidden && \"sr-only\")}\n      >\n        {label}\n      </Field.Label>\n      <div\n        className={cn(\n          \"flex items-center overflow-hidden border border-input transition-[border-color,box-shadow] duration-(--motion-fast) focus-within:border-ring focus-within:ring-2 focus-within:ring-ring/30 has-[[aria-invalid=true]]:border-destructive has-[:disabled]:opacity-50\",\n          radius\n        )}\n      >\n        {(prefix || FieldIcon) && (\n          <span\n            className={cn(\n              \"flex shrink-0 items-center text-muted-foreground\",\n              sizes.px,\n              sizes.gap,\n              sizes.iconClass\n            )}\n          >\n            {FieldIcon && <FieldIcon aria-hidden=\"true\" />}\n            {prefix}\n          </span>\n        )}\n        <Input\n          density={density}\n          shape={shape}\n          className=\"rounded-none border-0 shadow-none focus-visible:ring-0\"\n          {...props}\n        />\n        {suffix && (\n          <span className={cn(\"shrink-0 text-muted-foreground\", sizes.px)}>\n            {suffix}\n          </span>\n        )}\n        {addon && (\n          <span\n            className={cn(\n              \"flex shrink-0 items-center self-stretch border-l border-input bg-muted\",\n              sizes.px\n            )}\n          >\n            {addon}\n          </span>\n        )}\n      </div>\n      {description && (\n        <Field.Description className=\"px-2.5 text-xs text-muted-foreground\">\n          {description}\n        </Field.Description>\n      )}\n      {error && (\n        <Field.Error match className=\"px-2.5 text-xs text-destructive\">\n          {error}\n        </Field.Error>\n      )}\n    </Field.Root>\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "components/ui/input-group.tsx"
+    },
+    {
+      "path": "components/ui/input.tsx",
+      "content": "\"use client\";\nimport { Input as Primitive } from \"@base-ui/react/input\";\n\nimport { useShape } from \"@/lib/shape-context\";\nimport type { ShapeVariant } from \"@/lib/shape-context\";\nimport { useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nconst Input = ({\n  className,\n  type,\n  density,\n  shape,\n  ...props\n}: Omit<React.ComponentProps<typeof Primitive>, \"className\"> & {\n  className?: string;\n  density?: SizeVariant;\n  shape?: ShapeVariant;\n}) => {\n  const sizes = useSize(density);\n  const radius = useShape(shape);\n  return (\n    <Primitive\n      type={type}\n      data-slot=\"input\"\n      className={cn(\n        \"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n        \"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]\",\n        \"aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive\",\n        sizes.control,\n        sizes.px,\n        radius,\n        sizes.variant === \"compact\" && \"md:text-xs\",\n        className\n      )}\n      {...props}\n    />\n  );\n};\n\nexport { Input };\n",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx"
+    },
+    {
+      "path": "lib/icon-context.tsx",
+      "content": "\"use client\";\n\nimport {\n  Check,\n  ChevronDown,\n  ChevronRight,\n  Copy,\n  LoaderCircle,\n  Search,\n  X,\n} from \"lucide-react\";\nimport { createContext, useContext, useMemo } from \"react\";\nimport type { ComponentType, ReactNode, SVGProps } from \"react\";\n\nexport type IconProps = SVGProps<SVGSVGElement> & {\n  size?: number;\n  strokeWidth?: number;\n};\nexport type IconComponent = ComponentType<IconProps>;\nexport const defaultIcons = {\n  check: Check,\n  \"chevron-down\": ChevronDown,\n  \"chevron-right\": ChevronRight,\n  close: X,\n  copy: Copy,\n  loading: LoaderCircle,\n  search: Search,\n} satisfies Record<string, IconComponent>;\nexport type IconName = keyof typeof defaultIcons;\nconst IconContext =\n  createContext<Record<IconName, IconComponent>>(defaultIcons);\nexport const IconProvider = ({\n  icons,\n  children,\n}: {\n  icons: Partial<Record<IconName, IconComponent>>;\n  children: ReactNode;\n}) => {\n  const parent = useContext(IconContext);\n  const value = useMemo(() => ({ ...parent, ...icons }), [parent, icons]);\n  return <IconContext.Provider value={value}>{children}</IconContext.Provider>;\n};\nexport const Icon = ({ name, ...props }: IconProps & { name: IconName }) => {\n  const Component = useContext(IconContext)[name];\n  return <Component aria-hidden=\"true\" focusable=\"false\" {...props} />;\n};\n",
+      "type": "registry:lib",
+      "target": "lib/icon-context.tsx"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "motion-fast": "80ms"
+    }
+  },
+  "type": "registry:ui"
+}

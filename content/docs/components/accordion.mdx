@@ -1,0 +1,55 @@
+---
+title: Accordion
+description: Accessible single or multiple disclosures with fluid hover.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { AccordionDemo } from "@/examples/components/accordion";
+import { AccordionMultipleDemo } from "@/examples/components/accordion-multiple";
+
+## Preview
+
+### Single panel
+
+<ComponentPreview src="examples/components/accordion.tsx">
+  <AccordionDemo />
+</ComponentPreview>
+
+### Multiple panels and compact size
+
+<ComponentPreview src="examples/components/accordion-multiple.tsx">
+  <AccordionMultipleDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/accordion.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/accordion.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/accordion.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/accordion.json`}
+/>
+
+## Usage
+
+```tsx
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+
+<Accordion multiple defaultValue={["about"]}>
+  <AccordionItem value="about">
+    <AccordionTrigger>About</AccordionTrigger>
+    <AccordionContent>Details about this project.</AccordionContent>
+  </AccordionItem>
+</Accordion>;
+```
+
+## API Reference
+
+Root accepts Base UI Accordion props including `multiple`, `value`, `defaultValue`, `onValueChange` and `disabled`. Values are arrays, including single-panel mode. Items accept `value` and `disabled`. Trigger density follows SizeProvider; height animation respects reduced motion. Use arrow keys, Home/End, Enter and Space.

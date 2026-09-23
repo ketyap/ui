@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "description": "Badge with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "class-variance-authority@^0.7.1",
+    "lucide-react@1.47.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/badge.tsx",
+      "content": "\"use client\";\nimport type { useRender } from \"@base-ui/react/use-render\";\nimport { cva } from \"class-variance-authority\";\nimport type { VariantProps } from \"class-variance-authority\";\n\nimport { RenderSpan } from \"@/components/ui/render-element\";\nimport type { IconComponent } from \"@/lib/icon-context\";\nimport { useShape } from \"@/lib/shape-context\";\nimport { useSizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport const badgeColors = {\n  amber: \"#f59e0b\",\n  blue: \"#3b82f6\",\n  cyan: \"#06b6d4\",\n  emerald: \"#10b981\",\n  fuchsia: \"#d946ef\",\n  gray: \"#a3a3a3\",\n  green: \"#22c55e\",\n  indigo: \"#6366f1\",\n  lime: \"#84cc16\",\n  orange: \"#f97316\",\n  pink: \"#ec4899\",\n  purple: \"#a855f7\",\n  red: \"#ef4444\",\n  rose: \"#f43f5e\",\n  teal: \"#14b8a6\",\n  violet: \"#8b5cf6\",\n  yellow: \"#eab308\",\n} as const;\nexport type BadgeColor = keyof typeof badgeColors;\n\nconst badgeVariants = cva(\n  \"inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden\",\n  {\n    defaultVariants: {\n      variant: \"default\",\n    },\n    variants: {\n      variant: {\n        default:\n          \"border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90\",\n        destructive:\n          \"border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60\",\n        dot: \"border-border text-foreground bg-transparent\",\n        outline:\n          \"text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground\",\n        secondary:\n          \"border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90\",\n        solid: \"border-transparent text-foreground\",\n      },\n    },\n  }\n);\n\nconst Badge = ({\n  className,\n  variant,\n  render,\n  size,\n  color = \"gray\",\n  icon: BadgeIcon,\n  children,\n  style,\n  ...props\n}: React.ComponentProps<\"span\"> &\n  VariantProps<typeof badgeVariants> & {\n    render?: useRender.RenderProp;\n    size?: \"default\" | \"compact\";\n    color?: BadgeColor;\n    icon?: IconComponent;\n  }) => {\n  const Comp = RenderSpan;\n  const compact = useSizeVariant(size) === \"compact\";\n  const shape = useShape();\n  const appearance = variant ?? \"solid\";\n  const tint = badgeColors[color];\n\n  return (\n    <Comp\n      render={render}\n      data-slot=\"badge\"\n      data-variant={variant}\n      className={cn(\n        badgeVariants({ variant: appearance }),\n        compact ? \"h-5 px-2 text-[11px] gap-1\" : \"h-6 px-2.5 text-xs gap-1.5\",\n        shape,\n        className\n      )}\n      style={{\n        backgroundColor:\n          appearance === \"solid\"\n            ? `color-mix(in srgb, ${tint} 15%, var(--background))`\n            : undefined,\n        ...style,\n      }}\n      {...props}\n    >\n      {appearance === \"dot\" && (\n        <span\n          aria-hidden=\"true\"\n          className=\"shrink-0 rounded-full\"\n          style={{\n            backgroundColor: tint,\n            height: compact ? 6 : 7,\n            width: compact ? 6 : 7,\n          }}\n        />\n      )}\n      {BadgeIcon && <BadgeIcon aria-hidden=\"true\" />}\n      {children}\n    </Comp>\n  );\n};\n\nexport { Badge, badgeVariants };\n",
+      "type": "registry:ui",
+      "target": "components/ui/badge.tsx"
+    },
+    {
+      "path": "components/ui/render-element.tsx",
+      "content": "\"use client\";\n\nimport { useRender } from \"@base-ui/react/use-render\";\n\nexport const RenderDiv = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"div\">) =>\n  useRender({ defaultTagName: \"div\", props, render });\nexport const RenderSpan = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"span\">) =>\n  useRender({ defaultTagName: \"span\", props, render });\nexport const RenderAnchor = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"a\">) =>\n  useRender({ defaultTagName: \"a\", props, render });\n",
+      "type": "registry:ui",
+      "target": "components/ui/render-element.tsx"
+    },
+    {
+      "path": "lib/icon-context.tsx",
+      "content": "\"use client\";\n\nimport {\n  Check,\n  ChevronDown,\n  ChevronRight,\n  Copy,\n  LoaderCircle,\n  Search,\n  X,\n} from \"lucide-react\";\nimport { createContext, useContext, useMemo } from \"react\";\nimport type { ComponentType, ReactNode, SVGProps } from \"react\";\n\nexport type IconProps = SVGProps<SVGSVGElement> & {\n  size?: number;\n  strokeWidth?: number;\n};\nexport type IconComponent = ComponentType<IconProps>;\nexport const defaultIcons = {\n  check: Check,\n  \"chevron-down\": ChevronDown,\n  \"chevron-right\": ChevronRight,\n  close: X,\n  copy: Copy,\n  loading: LoaderCircle,\n  search: Search,\n} satisfies Record<string, IconComponent>;\nexport type IconName = keyof typeof defaultIcons;\nconst IconContext =\n  createContext<Record<IconName, IconComponent>>(defaultIcons);\nexport const IconProvider = ({\n  icons,\n  children,\n}: {\n  icons: Partial<Record<IconName, IconComponent>>;\n  children: ReactNode;\n}) => {\n  const parent = useContext(IconContext);\n  const value = useMemo(() => ({ ...parent, ...icons }), [parent, icons]);\n  return <IconContext.Provider value={value}>{children}</IconContext.Provider>;\n};\nexport const Icon = ({ name, ...props }: IconProps & { name: IconName }) => {\n  const Component = useContext(IconContext)[name];\n  return <Component aria-hidden=\"true\" focusable=\"false\" {...props} />;\n};\n",
+      "type": "registry:lib",
+      "target": "lib/icon-context.tsx"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

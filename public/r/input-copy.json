@@ -1,0 +1,73 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-copy",
+  "title": "InputCopy",
+  "description": "Input copy with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "lucide-react@1.47.0",
+    "motion@13.4.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/input-copy.tsx",
+      "content": "\"use client\";\n\nimport { Button as Primitive } from \"@base-ui/react/button\";\nimport { AnimatePresence, motion } from \"motion/react\";\nimport type { ComponentProps } from \"react\";\n\nimport { useClipboard } from \"@/hooks/use-clipboard\";\nimport { useReducedMotion } from \"@/hooks/use-reduced-motion\";\nimport { Icon } from \"@/lib/icon-context\";\nimport { motionTransition, spring } from \"@/lib/motion\";\nimport { useShape } from \"@/lib/shape-context\";\nimport { useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport interface InputCopyProps extends Omit<\n  ComponentProps<\"div\">,\n  \"onCopy\" | \"children\"\n> {\n  value: string;\n  label?: string;\n  disabled?: boolean;\n  size?: SizeVariant;\n  variant?: \"icon\" | \"button\";\n  align?: \"left\" | \"right\";\n  onCopy?: () => void;\n}\nexport const InputCopy = ({\n  value,\n  label,\n  disabled,\n  size,\n  variant = \"icon\",\n  align = \"right\",\n  onCopy,\n  className,\n  ...props\n}: InputCopyProps) => {\n  const { copy, copied, error } = useClipboard();\n  const sizes = useSize(size);\n  const shape = useShape();\n  const reduced = useReducedMotion();\n  const copyStatus = copied ? \"Copied\" : \"Copy\";\n  const status = error ? \"Copy failed\" : copyStatus;\n  const copyIcon = copied ? \"check\" : \"copy\";\n  const successAnnouncement = copied ? \"Copied to clipboard\" : \"\";\n  return (\n    <div className={cn(\"flex min-w-0 flex-col gap-1\", className)} {...props}>\n      {label && (\n        <span className={cn(\"text-muted-foreground\", sizes.text)}>{label}</span>\n      )}\n      <Primitive\n        disabled={disabled}\n        aria-label={`${status}${label ? ` ${label}` : \" to clipboard\"}`}\n        onClick={async () => {\n          if (await copy(value)) {\n            onCopy?.();\n          }\n        }}\n        className={cn(\n          \"group flex w-full min-w-0 items-center text-left outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50\",\n          sizes.control,\n          sizes.text,\n          sizes.px,\n          sizes.gap,\n          shape,\n          align === \"left\" && \"flex-row-reverse\"\n        )}\n      >\n        <span className=\"min-w-0 flex-1 truncate font-mono\">\n          <span className=\"group-hover:bg-[#6b97ff]/20\">{value}</span>\n        </span>\n        <span\n          className={cn(\n            \"flex shrink-0 items-center gap-1.5\",\n            sizes.iconClass,\n            error && \"text-destructive\"\n          )}\n        >\n          <AnimatePresence mode=\"wait\" initial={false}>\n            <motion.span\n              key={status}\n              initial={{ opacity: 0, scale: 0.8 }}\n              animate={{ opacity: 1, scale: 1 }}\n              exit={{ opacity: 0, scale: 0.8 }}\n              transition={motionTransition(spring.fast, reduced)}\n              className=\"flex\"\n            >\n              <Icon name={error ? \"close\" : copyIcon} />\n            </motion.span>\n          </AnimatePresence>\n          {variant === \"button\" && <span className=\"min-w-12\">{status}</span>}\n        </span>\n      </Primitive>\n      <span role=\"status\" className=\"sr-only\">\n        {error ? \"Unable to copy. Try again.\" : successAnnouncement}\n      </span>\n    </div>\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "components/ui/input-copy.tsx"
+    },
+    {
+      "path": "hooks/use-clipboard.ts",
+      "content": "\"use client\";\nimport { useCallback, useEffect, useRef, useState } from \"react\";\n\nexport const useClipboard = ({ timeout = 2000 }: { timeout?: number } = {}) => {\n  const [copied, setCopied] = useState(false);\n  const [copyError, setError] = useState<Error | null>(null);\n  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);\n  const request = useRef(0);\n  useEffect(\n    () => () => {\n      request.current += 1;\n      if (timer.current) {\n        clearTimeout(timer.current);\n      }\n    },\n    []\n  );\n  const copy = useCallback(\n    async (text: string) => {\n      request.current += 1;\n      const id = request.current;\n      if (timer.current) {\n        clearTimeout(timer.current);\n      }\n      setCopied(false);\n      setError(null);\n      try {\n        await navigator.clipboard.writeText(text);\n        if (id !== request.current) {\n          return false;\n        }\n        setCopied(true);\n        if (timeout > 0) {\n          timer.current = setTimeout(() => setCopied(false), timeout);\n        }\n        return true;\n      } catch (error) {\n        if (id === request.current) {\n          setError(\n            error instanceof Error\n              ? error\n              : new Error(\"Unable to copy to the clipboard.\")\n          );\n        }\n        return false;\n      }\n    },\n    [timeout]\n  );\n  return { copied, copy, error: copyError };\n};\n",
+      "type": "registry:hook",
+      "target": "hooks/use-clipboard.ts"
+    },
+    {
+      "path": "hooks/use-media-query.tsx",
+      "content": "import { useEffect, useState } from \"react\";\n\nexport const useMediaQuery = (query: string) => {\n  const [value, setValue] = useState(false);\n\n  useEffect(() => {\n    const onChange = (event: MediaQueryListEvent) => {\n      setValue(event.matches);\n    };\n\n    const result = matchMedia(query);\n    result.addEventListener(\"change\", onChange);\n    setValue(result.matches);\n\n    return () => result.removeEventListener(\"change\", onChange);\n  }, [query]);\n\n  return value;\n};\n",
+      "type": "registry:hook",
+      "target": "hooks/use-media-query.tsx"
+    },
+    {
+      "path": "hooks/use-reduced-motion.ts",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"@/hooks/use-media-query\";\n\n/** False during SSR and the first hydration render; subscribes after mounting. */\nexport const useReducedMotion = () =>\n  useMediaQuery(\"(prefers-reduced-motion: reduce)\");\n",
+      "type": "registry:hook",
+      "target": "hooks/use-reduced-motion.ts"
+    },
+    {
+      "path": "lib/icon-context.tsx",
+      "content": "\"use client\";\n\nimport {\n  Check,\n  ChevronDown,\n  ChevronRight,\n  Copy,\n  LoaderCircle,\n  Search,\n  X,\n} from \"lucide-react\";\nimport { createContext, useContext, useMemo } from \"react\";\nimport type { ComponentType, ReactNode, SVGProps } from \"react\";\n\nexport type IconProps = SVGProps<SVGSVGElement> & {\n  size?: number;\n  strokeWidth?: number;\n};\nexport type IconComponent = ComponentType<IconProps>;\nexport const defaultIcons = {\n  check: Check,\n  \"chevron-down\": ChevronDown,\n  \"chevron-right\": ChevronRight,\n  close: X,\n  copy: Copy,\n  loading: LoaderCircle,\n  search: Search,\n} satisfies Record<string, IconComponent>;\nexport type IconName = keyof typeof defaultIcons;\nconst IconContext =\n  createContext<Record<IconName, IconComponent>>(defaultIcons);\nexport const IconProvider = ({\n  icons,\n  children,\n}: {\n  icons: Partial<Record<IconName, IconComponent>>;\n  children: ReactNode;\n}) => {\n  const parent = useContext(IconContext);\n  const value = useMemo(() => ({ ...parent, ...icons }), [parent, icons]);\n  return <IconContext.Provider value={value}>{children}</IconContext.Provider>;\n};\nexport const Icon = ({ name, ...props }: IconProps & { name: IconName }) => {\n  const Component = useContext(IconContext)[name];\n  return <Component aria-hidden=\"true\" focusable=\"false\" {...props} />;\n};\n",
+      "type": "registry:lib",
+      "target": "lib/icon-context.tsx"
+    },
+    {
+      "path": "lib/motion.ts",
+      "content": "import type { Transition } from \"motion/react\";\n\n// Base UI owns presence; CSS consumers use the same timing ladder as Motion.\nexport const motionClasses = {\n  moderate:\n    \"duration-(--motion-moderate) data-[state=closed]:duration-(--motion-exit-moderate) motion-reduce:animate-none\",\n  slow: \"duration-(--motion-slow) data-[state=closed]:duration-(--motion-exit-slow) motion-reduce:animate-none\",\n};\n\n// Fluid Functionalism's timing ladder: quick feedback, precise panels, larger moves.\nexport const spring = {\n  fast: { bounce: 0, duration: 0.08, exit: { duration: 0.06 }, type: \"spring\" },\n  moderate: {\n    bounce: 0,\n    duration: 0.16,\n    exit: { duration: 0.12 },\n    type: \"spring\",\n  },\n  slow: {\n    bounce: 0.12,\n    duration: 0.24,\n    exit: { duration: 0.16 },\n    type: \"spring\",\n  },\n} as const;\n\nexport const motionPresets = {\n  activeIndicator: spring.moderate,\n  enter: {\n    animate: { opacity: 1, scale: 1 },\n    initial: { opacity: 0, scale: 0.95 },\n    transition: spring.moderate,\n  },\n  exit: { opacity: 0, scale: 0.95, transition: spring.moderate.exit },\n  fade: { duration: spring.fast.duration },\n  hover: spring.fast,\n  layout: spring.moderate,\n  snap: { duration: 0 },\n} satisfies Record<string, unknown>;\n\nexport const motionTransition = (\n  transition: Transition,\n  reduced: boolean\n): Transition =>\n  reduced ? { duration: 0, opacity: motionPresets.fade } : transition;\n",
+      "type": "registry:lib",
+      "target": "lib/motion.ts"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "motion-exit-moderate": "120ms",
+      "motion-exit-slow": "160ms",
+      "motion-moderate": "160ms",
+      "motion-slow": "240ms"
+    }
+  },
+  "type": "registry:ui"
+}

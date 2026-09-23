@@ -1,0 +1,59 @@
+---
+title: Scrollbars
+description: Native scrolling with subtle, draggable pointer scrollbars and edge fades.
+---
+
+import { ScrollbarsDemo } from "@/examples/foundations/scrollbars";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Scrollbars help answer two questions: **is there more content, and where am I within it?** A horizontal collection can look complete when its next item is just outside the viewport. A permanently prominent track, on the other hand, can compete with the content.
+
+This foundation pairs restrained scrollbars with edge fades. A fade appears only at an edge with more content beyond it. The thumb offers a direct drag target for a pointer, while the content still uses the browser's own scrolling.
+
+## Native movement, custom affordances
+
+ScrollArea does not replace wheel or touch input with simulated motion. Base UI supplies the custom pointer scrollbar; touch-primary devices use native overflow. This keeps scrolling familiar while allowing desktop tracks to match the interface.
+
+Choose auto visibility for a quiet surface, always when discovering overflow is important, and hidden only when another clear affordance exists. Hidden removes the custom track, not the ability to scroll. For native scrolling, the operating system decides how its scrollbar is displayed.
+
+In the preview, drag the horizontal thumb and scroll the vertical list. Watch the fades disappear at the ends. Switch to native scrolling to compare the presentation without changing the content.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/scrollbars.tsx" />}
+>
+  <ScrollbarsDemo />
+</DocsPreview>
+
+## Behavior
+
+Drag the horizontal thumb, use a trackpad, or focus a viewport and press arrow keys. The 10px track contains a 4px thumb that widens to 6px on hover. Auto visibility stays visible while hovering and for 600ms after scrolling.
+
+Touch-primary devices use a native overflow viewport. Wheel input and touch scrolling are never converted into a custom physics simulation.
+
+## Installation
+
+Use `components/ui/scroll-area.tsx`, `useScrollEdges`, `useMediaQuery`, and the shared motion CSS tokens. Base UI is already installed in this starter.
+
+## Usage
+
+```tsx
+<ScrollArea orientation="horizontal" className="h-40 w-full" label="Projects">
+  <div className="flex w-max gap-3">{projects}</div>
+</ScrollArea>
+```
+
+## API Reference
+
+| Prop              | Values                             | Default            |
+| ----------------- | ---------------------------------- | ------------------ |
+| orientation       | vertical, horizontal, both         | vertical           |
+| native            | Force native overflow              | false              |
+| fade              | Mask edges that still have content | true               |
+| visibility        | auto, always, hidden               | auto               |
+| label             | Accessible viewport name           | Scrollable content |
+| viewportClassName | Classes on the scrollable viewport | —                  |
+
+Give the area a bounded height and/or width. Overflow is derived from content. Native scrollbar visibility follows the operating system; `visibility` controls only custom tracks. `ScrollBar` is exported for custom Base UI composition. Reduced motion removes scrollbar size travel.

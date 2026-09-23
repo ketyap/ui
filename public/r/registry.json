@@ -1,0 +1,1354 @@
+{
+  "name": "ketyap-ui",
+  "homepage": "https://github.com/ketyap/ui",
+  "items": [
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Accordion with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "jotai@^3.0.0",
+        "lucide-react@1.47.0",
+        "motion@13.4.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/accordion.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)"
+        }
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Badge with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "class-variance-authority@^0.7.1",
+        "lucide-react@1.47.0"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Button with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "class-variance-authority@^0.7.1",
+        "jotai@^3.0.0",
+        "lucide-react@1.47.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-fast": "80ms"
+        }
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Standalone checkbox with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "target": "lib/motion.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "target": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "target": "hooks/use-media-query.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms"
+        }
+      }
+    },
+    {
+      "name": "checkbox-group",
+      "type": "registry:ui",
+      "title": "CheckboxGroup",
+      "description": "Checkbox group with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/checkbox-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox-group.tsx"
+        },
+        {
+          "path": "components/ui/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/checkbox.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)"
+        }
+      }
+    },
+    {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "ColorPicker",
+      "description": "Color picker with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "class-variance-authority@^0.7.1",
+        "jotai@^3.0.0",
+        "lucide-react@1.47.0",
+        "motion@13.4.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/color-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/color-picker.tsx"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        },
+        {
+          "path": "hooks/use-controllable-state.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-controllable-state.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "components/ui/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/popover.tsx"
+        },
+        {
+          "path": "components/ui/elevated.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/elevated.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-fast": "80ms",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Dialog with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "jotai@^3.0.0",
+        "lucide-react@1.47.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dialog.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "components/ui/elevated.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/elevated.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "DropdownMenu",
+      "description": "Dropdown menu with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "jotai@^3.0.0",
+        "lucide-react@1.47.0",
+        "motion@13.4.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/dropdown-menu.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "components/ui/elevated.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/elevated.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)",
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Standalone input with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input-copy",
+      "type": "registry:ui",
+      "title": "InputCopy",
+      "description": "Input copy with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@1.47.0",
+        "motion@13.4.0"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/input-copy.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input-copy.tsx"
+        },
+        {
+          "path": "hooks/use-clipboard.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-clipboard.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        }
+      }
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "InputGroup",
+      "description": "Input group with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "lucide-react@1.47.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/input-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input-group.tsx"
+        },
+        {
+          "path": "components/ui/input.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/input.tsx"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-fast": "80ms"
+        }
+      }
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "An accessible label associated with a control.",
+      "dependencies": ["@base-ui/react@^1.8.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/label.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/label.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "RadioGroup",
+      "description": "Radio group with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/radio-group.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/radio-group.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)"
+        }
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Select with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "lucide-react@1.47.0",
+        "motion@13.4.0"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/select.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/select.tsx"
+        },
+        {
+          "path": "components/ui/elevated.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/elevated.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "components/ui/render-element.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/render-element.tsx"
+        },
+        {
+          "path": "components/ui/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/scroll-area.tsx"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "hooks/use-scroll-edges.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-scroll-edges.ts"
+        },
+        {
+          "path": "lib/icon-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/icon-context.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)",
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Slider with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/slider.tsx"
+        },
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        },
+        {
+          "path": "hooks/use-measure.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-measure.ts"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-exit-fast": "60ms",
+          "motion-fast": "80ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Switch with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/switch.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/switch.tsx"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        }
+      }
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Table with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0", "motion@13.4.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/table.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/table.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-area.tsx"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-fast": "80ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)"
+        }
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabs with Base UI and Ketyap UI foundations.",
+      "dependencies": [
+        "@base-ui/react@^1.8.0",
+        "@web-kits/audio@^0.2.0",
+        "jotai@^3.0.0",
+        "motion@13.4.0",
+        "web-haptics@^0.0.6"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tabs.tsx"
+        },
+        {
+          "path": "audio/core.ts",
+          "type": "registry:file",
+          "target": "lib/audio/core.ts"
+        },
+        {
+          "path": "components/ui/fluid-hover-highlight.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/fluid-hover-highlight.tsx"
+        },
+        {
+          "path": "hooks/use-controllable-state.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-controllable-state.ts"
+        },
+        {
+          "path": "hooks/use-feedback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-feedback.ts"
+        },
+        {
+          "path": "hooks/use-fluid-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-fluid-hover.ts"
+        },
+        {
+          "path": "hooks/use-haptic-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-haptic-toggle.ts"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
+        },
+        {
+          "path": "hooks/use-reduced-motion.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-reduced-motion.ts"
+        },
+        {
+          "path": "hooks/use-sound-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-sound-toggle.ts"
+        },
+        {
+          "path": "lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motion.ts"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/size-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/size-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "fluid-hover": "rgb(0 0 0 / 4%)",
+          "motion-exit-moderate": "120ms",
+          "motion-exit-slow": "160ms",
+          "motion-moderate": "160ms",
+          "motion-slow": "240ms"
+        },
+        "dark": {
+          "fluid-hover": "rgb(255 255 255 / 6%)"
+        }
+      }
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Tooltip with Base UI and Ketyap UI foundations.",
+      "dependencies": ["@base-ui/react@^1.8.0"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/tooltip.tsx"
+        },
+        {
+          "path": "lib/shape-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/shape-context.tsx"
+        },
+        {
+          "path": "lib/surface-context.tsx",
+          "type": "registry:lib",
+          "target": "lib/surface-context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "motion-exit-fast": "60ms",
+          "motion-fast": "80ms",
+          "surface-1": "#fafafa",
+          "surface-2": "#fcfcfc",
+          "surface-3": "#fff",
+          "surface-4": "#fff",
+          "surface-5": "#fff",
+          "surface-6": "#fff",
+          "surface-7": "#fff",
+          "surface-8": "#fff"
+        },
+        "dark": {
+          "surface-1": "#171717",
+          "surface-2": "#1e1e1e",
+          "surface-3": "#252525",
+          "surface-4": "#2c2c2c",
+          "surface-5": "#333",
+          "surface-6": "#3a3a3a",
+          "surface-7": "#414141",
+          "surface-8": "#484848"
+        }
+      }
+    }
+  ]
+}

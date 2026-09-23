@@ -1,0 +1,35 @@
+---
+title: Switch
+description: An accessible switch with an animated thumb.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { SwitchDemo } from "@/examples/components/switch";
+
+## Preview
+
+<ComponentPreview src="examples/components/switch.tsx">
+  <SwitchDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/switch.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/switch.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/switch.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/switch.json`}
+/>
+
+## Usage
+
+```tsx
+import { Switch } from "@/components/ui/switch";
+
+<Switch label="Notifications" defaultChecked />;
+```
+
+## API Reference
+
+Accepts Base UI Switch Root props: `checked`, `defaultChecked`, `onCheckedChange`, `disabled`, `name` and `required`. Optional `label` labels the control. Without it provide `aria-label`. `size`: default or compact; otherwise inherits SizeProvider.

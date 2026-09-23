@@ -1,0 +1,47 @@
+---
+title: InputGroup
+description: Compose labeled fields with icons, prefixes, suffixes and addons.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { InputGroupDemo } from "@/examples/components/input-group";
+import { InputGroupValidationDemo } from "@/examples/components/input-group-validation";
+
+## Preview
+
+### Prefixes, icons and addons
+
+<ComponentPreview src="examples/components/input-group.tsx">
+  <InputGroupDemo />
+</ComponentPreview>
+
+### Validation and disabled
+
+<ComponentPreview src="examples/components/input-group-validation.tsx">
+  <InputGroupValidationDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/input-group.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/input-group.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/input-group.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/input-group.json`}
+/>
+
+## Usage
+
+```tsx
+import { InputGroup, InputField } from "@/components/ui/input-group";
+
+<InputGroup>
+  <InputField label="Website" prefix="https://" placeholder="example.com" />
+</InputGroup>;
+```
+
+## API Reference
+
+InputGroup accepts div props and optional `size` (default or compact). InputField reuses Input and accepts its props plus `label`, `description`, `error`, `prefix`, `suffix`, `addon`, `icon` and `labelHidden`. `onChange` is the standard input event. Base UI Field connects labels, descriptions and errors.

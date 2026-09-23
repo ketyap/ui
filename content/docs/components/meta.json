@@ -1,0 +1,25 @@
+{
+  "title": "Components",
+  "pages": [
+    "index",
+    "accordion",
+    "badge",
+    "button",
+    "checkbox",
+    "checkbox-group",
+    "color-picker",
+    "dialog",
+    "dropdown-menu",
+    "input",
+    "input-copy",
+    "input-group",
+    "label",
+    "radio-group",
+    "select",
+    "slider",
+    "switch",
+    "table",
+    "tabs",
+    "tooltip"
+  ]
+}

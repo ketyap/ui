@@ -1,0 +1,52 @@
+---
+title: Tabs
+description: Segmented and subtle tabs with a moving selection indicator.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { TabsDemo } from "@/examples/components/tabs";
+import { TabsSubtleDemo } from "@/examples/components/tabs-subtle";
+
+## Preview
+
+### Default and compact
+
+<ComponentPreview src="examples/components/tabs.tsx">
+  <TabsDemo />
+</ComponentPreview>
+
+### Subtle
+
+<ComponentPreview src="examples/components/tabs-subtle.tsx">
+  <TabsSubtleDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/tabs.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/tabs.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/tabs.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/tabs.json`}
+/>
+
+## Usage
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
+<Tabs variant="subtle" defaultValue="overview">
+  <TabsList aria-label="Project">
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="activity">Activity</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">Overview content</TabsContent>
+  <TabsContent value="activity">Activity content</TabsContent>
+</Tabs>;
+```
+
+## API Reference
+
+`variant`: default (segmented) or subtle. Root accepts Base UI `value`, `defaultValue`, `onValueChange`, and `orientation`. Triggers support `disabled`. The shared indicator follows selection; fluid hover follows the pointer. SizeProvider controls density. Base UI manages keyboard activation and panel relationships. Reduced motion removes the indicator travel.

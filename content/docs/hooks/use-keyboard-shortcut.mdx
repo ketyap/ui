@@ -1,0 +1,62 @@
+---
+title: useKeyboardShortcut
+description: Register an application shortcut without replacing primitive navigation.
+---
+
+import { KeyboardShortcutDemo } from "@/examples/hooks/keyboard-shortcut";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+useKeyboardShortcut connects an application action to a key combination. A familiar example is opening a search dialog with Command-K on macOS or Control-K elsewhere; `mod+k` describes that platform-dependent shortcut once.
+
+A document-level key listener needs more care than checking one letter. It should not interrupt someone typing into a field, trigger during text composition, or continue firing after its feature is disabled. The hook keeps those rules with the shortcut instead of scattering them across pages.
+
+## Shortcuts are not navigation
+
+Use it for explicit application commands such as opening a command dialog. Do not use it to reimplement arrow-key navigation, Escape dismissal, or focus trapping inside menus and dialogs. Those remain the primitive's responsibility.
+
+Keep a visible button for the same action so the shortcut is an enhancement, not the only entry point. Enable shortcuts only in the relevant scope, avoid browser-reserved combinations, and opt into editable fields deliberately.
+
+The preview uses **mod+shift+k**, because the Docs already uses mod+k for search. Try it with focus outside and inside the input, then toggle the enabled and editable-field options.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/hooks/keyboard-shortcut.tsx" />}
+>
+  <KeyboardShortcutDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-keyboard-shortcut.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useKeyboardShortcut } from "@/hooks/use-keyboard-shortcut";
+
+useKeyboardShortcut("mod+k", () => setOpen(true), {
+  enabled: true,
+  preventDefault: true,
+  enableOnFormTags: false,
+});
+```
+
+## API Reference
+
+| API                | Type                             | Behavior / default               |
+| ------------------ | -------------------------------- | -------------------------------- |
+| `shortcut`         | `string`                         | `mod+k, mod+shift+k, ctrl+alt+k` |
+| `callback`         | `(event: KeyboardEvent) => void` | `Called on a matching keydown`   |
+| `enabled`          | `boolean`                        | `true`                           |
+| `preventDefault`   | `boolean`                        | `true`                           |
+| `enableOnFormTags` | `boolean`                        | `false`                          |
+
+## Behavior
+
+mod resolves to Command on Apple platforms and Control elsewhere. Exact modifier matching avoids accidentally triggering a shortcut with extra modifiers. Repeats, composing events, and already-handled events are ignored. Inputs, textareas, selects, and contenteditable descendants are ignored by default. The preview uses mod+shift+k because the Docs already owns mod+k. Base UI continues to own menu arrow navigation, Escape, and focus management.
+
+## Implementation
+
+<ComponentSource src="hooks/use-keyboard-shortcut.ts" />

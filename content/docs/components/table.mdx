@@ -1,0 +1,55 @@
+---
+title: Table
+description: Presentational table parts with selected rows and fluid hover.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { TableDemo } from "@/examples/components/table";
+
+## Preview
+
+<ComponentPreview src="examples/components/table.tsx">
+  <TableDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/table.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/table.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/table.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/table.json`}
+/>
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from "@/components/ui/table";
+
+<Table>
+  <TableCaption>Reading list</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Title</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow selected>
+      <TableCell>Dune</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>;
+```
+
+## API Reference
+
+All parts accept their native table element props. Table `size`: default or compact, otherwise inherited. Row `selected` adds selection styling; `interactive` enables fluid hover. Put an accessible Button or link inside an interactive row. Table does not invent row keyboard semantics or manage sorting, filtering or pagination. Horizontal overflow remains scrollable.

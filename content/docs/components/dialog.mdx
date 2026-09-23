@@ -1,0 +1,58 @@
+---
+title: Dialog
+description: Modal surfaces with three widths and nested overlays.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { DialogDemo } from "@/examples/components/dialog";
+import { DialogNestedDemo } from "@/examples/components/dialog-nested";
+
+## Preview
+
+### Sizes
+
+<ComponentPreview src="examples/components/dialog.tsx">
+  <DialogDemo />
+</ComponentPreview>
+
+### Nested overlays
+
+<ComponentPreview src="examples/components/dialog-nested.tsx">
+  <DialogNestedDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/dialog.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/dialog.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/dialog.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/dialog.json`}
+/>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+
+<Dialog>
+  <DialogTrigger render={<Button />}>Open settings</DialogTrigger>
+  <DialogContent size="small">
+    <DialogTitle>Settings</DialogTitle>
+    <DialogDescription>Manage your preferences.</DialogDescription>
+  </DialogContent>
+</Dialog>;
+```
+
+## API Reference
+
+Root exposes Base UI Dialog state and dismissal props; existing `sounds` remains supported. Content `size`: small (400px), default (540px), large (880px), narrowed to 360/480/800px in compact density. Content is constrained to the viewport and scrolls when needed. `showCloseButton` defaults to true. Header, Footer, Title, Description, Close, Overlay and Portal are exported. Include a Title. The nested overlays example includes Select, DropdownMenu and Tooltip for nested surface and focus testing.

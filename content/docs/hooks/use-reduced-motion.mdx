@@ -1,0 +1,54 @@
+---
+title: useReducedMotion
+description: Read the operating system's reduced-motion preference safely.
+---
+
+import { ReducedMotionDemo } from "@/examples/hooks/reduced-motion";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Reduced motion is a user preference that asks an interface to limit movement. Large translations and animated resizing can be uncomfortable for some people; removing that travel should not remove the feedback that explains what happened.
+
+This hook exposes the operating system's preference to JavaScript while keeping server rendering safe. It is intended for behavior that CSS or the Motion provider does not already handle.
+
+## Use the right layer
+
+For CSS transitions, prefer the `prefers-reduced-motion` media query. For Motion transform and layout animations, the [MotionProvider](/docs/foundations/motion) already applies the preference. Use this hook for an imperative action such as choosing instant rather than smooth scrolling, or for a standalone primitive that must work outside the provider.
+
+The server cannot know the browser preference. The hook therefore uses the same initial value on the server and during hydration, then subscribes in the browser. Do not use it to produce different essential content or to assume the preference is known before mounting.
+
+The preview reports the current preference. Change reduced motion in your system or browser's accessibility emulation to compare positional travel with a stationary response; opacity feedback can remain.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/hooks/reduced-motion.tsx" />}>
+  <ReducedMotionDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-reduced-motion.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+
+const reduced = useReducedMotion();
+// For non-Motion behavior:
+element.scrollTo({ top: 0, behavior: reduced ? "instant" : "smooth" });
+```
+
+## API Reference
+
+| API      | Type      | Behavior / default                                        |
+| -------- | --------- | --------------------------------------------------------- |
+| `return` | `boolean` | `false on the server, then the current media query value` |
+
+## Behavior
+
+This hook reuses the existing useMediaQuery subscription. The initial client render matches SSR; subsequent preference changes update the result. MotionProvider already handles Motion transform and layout animations, so use this hook only for additional non-Motion behavior or independently installable primitives. The demo's position snaps when reduced motion is enabled, while opacity feedback remains.
+
+## Implementation
+
+<ComponentSource src="hooks/use-reduced-motion.ts" />

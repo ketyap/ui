@@ -1,0 +1,59 @@
+---
+title: useMeasure
+description: Observe an element's border-box dimensions as its content changes.
+---
+
+import { MeasureDemo } from "@/examples/hooks/measure";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+useMeasure observes an element's layout width and height. It is useful when another part of the interface needs a numeric size, not just CSS layout.
+
+An expanding container illustrates the problem: its content may change because text wraps, a section opens, or its available width changes. A one-time measurement becomes stale. ResizeObserver lets the hook respond to the element itself instead of guessing from window resize events.
+
+## Measure only what JavaScript needs
+
+Prefer CSS for ordinary responsive layout. Use measurement when you need to animate a numeric height or coordinate another element with the measured content. Measure the inner content and animate the outer wrapper; measuring the element whose size you are setting can create a feedback loop.
+
+The result is the border-box layout size, not the apparent size after a transform. It starts at zero before the element is observed, so avoid treating that initial value as a real collapsed state during server rendering.
+
+Expand the content below. The inner measurement changes, and the wrapper follows it using the shared Motion preset.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/hooks/measure.tsx" />}>
+  <MeasureDemo />
+</DocsPreview>
+
+## Installation
+
+The starter includes `hooks/use-measure.ts`. Import the hook directly; no application-wide provider is required.
+
+## Usage
+
+```tsx
+import { useMeasure } from "@/hooks/use-measure";
+
+const { ref, width, height } = useMeasure<HTMLDivElement>();
+return (
+  <div ref={ref}>
+    {width} × {height}
+  </div>
+);
+```
+
+## API Reference
+
+| API      | Type           | Behavior / default                   |
+| -------- | -------------- | ------------------------------------ |
+| `ref`    | `Callback ref` | `Attach to the element to observe`   |
+| `width`  | `number`       | `Border-box width in layout pixels`  |
+| `height` | `number`       | `Border-box height in layout pixels` |
+
+## Behavior
+
+The demo measures inner content while the outer container animates its height using the shared layout spring. Width and height start at zero on the server. The observer attaches after hydration, follows ref replacement, and disconnects on unmount. Transform scale is deliberately excluded: these are layout dimensions.
+
+## Implementation
+
+<ComponentSource src="hooks/use-measure.ts" />

@@ -1,0 +1,66 @@
+---
+title: Button
+description: Actions with five visual variants, loading feedback, and icons.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { ButtonDemo } from "@/examples/components/button";
+import { ButtonIconsDemo } from "@/examples/components/button-icons";
+import { ButtonLoadingDemo } from "@/examples/components/button-loading";
+
+## Preview
+
+### Variants
+
+<ComponentPreview src="examples/components/button.tsx">
+  <ButtonDemo />
+</ComponentPreview>
+
+### Icons and sizes
+
+<ComponentPreview src="examples/components/button-icons.tsx">
+  <ButtonIconsDemo />
+</ComponentPreview>
+
+### Loading
+
+<ComponentPreview src="examples/components/button-loading.tsx">
+  <ButtonLoadingDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/button.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/button.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/button.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/button.json`}
+/>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+<Button variant="primary" loading={saving}>
+  Save changes
+</Button>;
+```
+
+## API Reference
+
+| Prop                       | Values                                                                  | Default                      |
+| -------------------------- | ----------------------------------------------------------------------- | ---------------------------- |
+| variant                    | primary, secondary, tertiary, ghost, destructive                        | default (primary appearance) |
+| size                       | default, compact, icon, icon-compact; existing sm, lg, icon-sm, icon-lg | inherited density            |
+| loading                    | boolean                                                                 | false                        |
+| active                     | boolean                                                                 | false                        |
+| leadingIcon / trailingIcon | SVG component                                                           | —                            |
+| disabled                   | boolean                                                                 | false                        |
+| density                    | default, compact                                                        | SizeProvider                 |
+| shape                      | rounded, pill                                                           | ShapeProvider                |
+| render                     | Base UI render element or callback                                      | button                       |
+
+Existing default, outline and link variants remain available. For a link, use `render={<a href="/" />}`. Base UI handles disabled interaction. Loading disables activation and preserves the label. Icon-only buttons need an accessible label.

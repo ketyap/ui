@@ -1,0 +1,58 @@
+---
+title: Sizes
+description: Set the density of a region, rather than sizing every component individually.
+---
+
+import { SizesDemo } from "@/examples/foundations/sizes";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Sizes controls **density**: how much room a group of controls occupies. It is different from making one important button larger.
+
+Consider a filter toolbar with a search input, a role picker, and an action button. Shrinking only the button leaves mismatched heights, labels, and spacing. Repeating a small-size prop on every child also makes it easy to miss a control added later. A SizeProvider establishes one density for the region, and participating components read it together.
+
+## Choosing a density
+
+Use default for ordinary forms and settings where controls need room to breathe. Compact is useful in information-dense desktop toolbars and panels. Compact is not an automatic mobile mode: smaller controls are not necessarily easier to tap, so choose it deliberately for the interaction.
+
+The provider changes participating controls, not every margin or text size in the page. A nested provider or a control's explicit density can make a local exception. A Button's existing `size="sm"` remains a component-specific variant, not a synonym for compact.
+
+Compare the same input, select, and button below. Open both role selectors: the inherited density is part of the controls, not a scaled screenshot.
+
+## Preview
+
+<DocsPreview code={<ComponentSource src="examples/foundations/sizes.tsx" />}>
+  <SizesDemo />
+</DocsPreview>
+
+## Default and compact
+
+Both previews contain the same controls. Default is 36px with 13px labels and 16px icons; compact is 28px with 12px labels and 14px icons.
+
+## Installation
+
+Use `lib/size-context.tsx` with the foundation-aware Button, Input, Select, NativeSelect, and Tabs from this starter.
+
+## Usage
+
+```tsx
+import { SizeProvider } from "@/lib/size-context";
+
+<SizeProvider size="compact">
+  <Button>Save</Button>
+  <Input aria-label="Name" />
+  <Button density="default">Default override</Button>
+</SizeProvider>;
+```
+
+## API Reference
+
+| API                       | Values                                      | Default               |
+| ------------------------- | ------------------------------------------- | --------------------- |
+| SizeProvider.size         | default, compact                            | required              |
+| useSizeVariant(override?) | resolved density                            | default               |
+| useSize(override?)        | control, controlHeight, text, gap, px, icon | inherited             |
+| Control.density           | default, compact                            | inherited             |
+| Button.size               | existing component variants                 | explicit variant wins |
+
+Density and a component's own size are separate. An explicit Button `size="sm"` retains its existing 32px variant; the provider controls otherwise-unsized buttons. Nested providers override only their descendants, including portal content. Inputs retain 16px text on small screens to avoid iOS focus zoom.

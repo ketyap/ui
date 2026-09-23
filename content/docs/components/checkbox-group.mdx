@@ -1,0 +1,55 @@
+---
+title: CheckboxGroup
+description: Multiple choices with connected selected rows and fluid hover.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { CheckboxGroupDemo } from "@/examples/components/checkbox-group";
+import { CheckboxGroupControlledDemo } from "@/examples/components/checkbox-group-controlled";
+import { CheckboxGroupCompactDemo } from "@/examples/components/checkbox-group-compact";
+
+## Preview
+
+### Controlled selection
+
+<ComponentPreview src="examples/components/checkbox-group.tsx">
+  <CheckboxGroupDemo />
+</ComponentPreview>
+
+### Select all and indeterminate
+
+<ComponentPreview src="examples/components/checkbox-group-controlled.tsx">
+  <CheckboxGroupControlledDemo />
+</ComponentPreview>
+
+### Compact and disabled
+
+<ComponentPreview src="examples/components/checkbox-group-compact.tsx">
+  <CheckboxGroupCompactDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/checkbox-group.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/checkbox-group.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/checkbox-group.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/checkbox-group.json`}
+/>
+
+## Usage
+
+```tsx
+import { CheckboxGroup, CheckboxItem } from "@/components/ui/checkbox-group";
+
+<CheckboxGroup aria-label="Interests" defaultValue={["science"]}>
+  <CheckboxItem value="science" label="Science" description="New discoveries" />
+  <CheckboxItem value="history" label="History" />
+</CheckboxGroup>;
+```
+
+## API Reference
+
+Group uses Base UI `value`, `defaultValue` (string arrays), `onValueChange`, `disabled` and form props. Give the group an accessible name. CheckboxItem composes the standalone Checkbox, sharing its check-drawing animation, and accepts Base UI Checkbox Root props and requires `label`; `description` is optional. Both individual and group disabling are supported. Tab moves between checkboxes; Space changes selection. Density follows SizeProvider.

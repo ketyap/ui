@@ -1,0 +1,56 @@
+---
+title: Slider
+description: Quiet sliders with elastic edge feedback, range and marks.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { SliderDemo } from "@/examples/components/slider";
+import { SliderRangeDemo } from "@/examples/components/slider-range";
+
+## Preview
+
+### Single value and scrubber
+
+Hover or focus to reveal the handle and tick marks. Drag beyond either end for a small elastic stretch; the value stays within its bounds. The handle softens near the inline label and value to keep them readable.
+
+<ComponentPreview src="examples/components/slider.tsx">
+  <SliderDemo />
+</ComponentPreview>
+
+### Range, steps and marks
+
+<ComponentPreview src="examples/components/slider-range.tsx">
+  <SliderRangeDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/slider.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/slider.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/slider.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/slider.json`}
+/>
+
+## Usage
+
+```tsx
+import { Slider } from "@/components/ui/slider";
+
+<Slider
+  label="Price"
+  defaultValue={[20, 70]}
+  min={0}
+  max={100}
+  step={5}
+  size="compact"
+/>;
+```
+
+## API Reference
+
+`value` / `defaultValue`: number or an array for a range. `onValueChange` uses the Base UI callback. `min`, `max`, `step`, `disabled`, and form props follow Base UI. `label` names the slider (default Value). `variant`: comfortable (default) or scrubber. `size`: default or compact, otherwise inherited. `marks`: numbers or `{ value, label }` objects. `tooltip` defaults to true. Use arrow keys, Home/End and Page Up/Down. Step snapping, pointer capture and keyboard interaction are provided by Base UI. When `marks` is omitted, subtle step or decile ticks appear during interaction. Reduced motion disables the elastic stretch.
+
+The edge feedback and quiet handle treatment are inspired by [Elastic Slider](https://chanhdai.com/components/elastic-slider), using Ketyap UI’s existing color, shape, size and motion foundations.

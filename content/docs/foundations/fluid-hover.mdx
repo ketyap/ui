@@ -1,0 +1,98 @@
+---
+title: Fluid Hover
+description: One highlight glides to the nearest item across lists, tabs, and grids.
+---
+
+import {
+  FluidListDemo,
+  FluidTabsDemo,
+  FluidMenuDemo,
+  FluidTableDemo,
+} from "@/examples/foundations/fluid-hover";
+import { DocsPreview } from "@/components/docs-preview";
+import { ComponentSource } from "@/components/component-source";
+
+Fluid Hover treats a group of items as one continuous pointer target. Instead of each item independently turning its background on and off, **one highlight moves between them**.
+
+Ordinary hover can flicker off in the gaps between rows or cards. Here, the nearest eligible item remains the visual target while the pointer is inside the group. That makes a tightly related list feel connected, including the small spaces between its items.
+
+## Hover is not selection
+
+The highlight answers “which item is under my pointer?” It does not mean that item has been selected, and it does not move keyboard focus. In the preview, the selected folder changes only after activation; moving the pointer merely moves the highlight.
+
+Use this for related rows, navigation, menus, and grids where a shared highlight makes the target clearer. Keep ordinary hover for unrelated controls. For tables or consequential actions, disable gap-click routing so empty space does not activate a nearby item.
+
+The hook calculates the target and geometry; FluidHoverHighlight draws it with the shared Motion preset. This separation lets the same behavior work with ordinary buttons, semantic table rows, or Base UI menu items without replacing their accessibility behavior.
+
+Move slowly across the gaps in the vertical list, then compare horizontal tabs and the grid. Touch input does not create a persistent hover highlight.
+
+## Preview
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidListDemo />
+</DocsPreview>
+
+## Horizontal tabs
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidTabsDemo />
+</DocsPreview>
+
+## Grid
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidListDemo grid />
+</DocsPreview>
+
+## Installation
+
+Use `useFluidHover`, `FluidHoverHighlight`, `lib/motion.ts`, and `lib/shape-context.tsx`. The starter includes Motion already.
+
+## Usage
+
+```tsx
+const ref = useRef<HTMLDivElement>(null);
+const hover = useFluidHover(ref, { axis: "y" });
+
+<div ref={ref} {...hover.handlers} className="relative">
+  <FluidHoverHighlight hover={hover} />
+  {items.map((item, index) => (
+    <button key={item.id} ref={(node) => hover.registerItem(index, node)}>
+      {item.label}
+    </button>
+  ))}
+</div>;
+```
+
+## API Reference
+
+| Prop       | Meaning                                |
+| ---------- | -------------------------------------- |
+| hover      | Return value of useFluidHover          |
+| hidden     | Hide without discarding the hook state |
+| transition | Motion transition or false to snap     |
+| className  | Additional highlight classes           |
+
+The Hook owns registration, measurement, pointer tracking, and selection. The Foundation only draws the highlight with the fast spring. A new pointer entry fades in at its target instead of flying in from an old location. Reduced motion snaps position while retaining a short opacity fade. Touch does not synthesize hover.
+
+## Menus and table rows
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidMenuDemo />
+</DocsPreview>
+
+<DocsPreview
+  code={<ComponentSource src="examples/foundations/fluid-hover.tsx" />}
+>
+  <FluidTableDemo />
+</DocsPreview>
+
+Use axis `y` for menus and table rows, `x` for horizontal lists, and `xy` for grids. Register the actual row element. Keep native table markup and draw a decorative overlay in its positioned container. Base UI retains menu navigation and focus management; do not replace it with pointer logic. Set `gapClick={false}` for tables or destructive actions where empty space must stay inert.

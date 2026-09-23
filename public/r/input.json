@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "Standalone input with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/input.tsx",
+      "content": "\"use client\";\nimport { Input as Primitive } from \"@base-ui/react/input\";\n\nimport { useShape } from \"@/lib/shape-context\";\nimport type { ShapeVariant } from \"@/lib/shape-context\";\nimport { useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nconst Input = ({\n  className,\n  type,\n  density,\n  shape,\n  ...props\n}: Omit<React.ComponentProps<typeof Primitive>, \"className\"> & {\n  className?: string;\n  density?: SizeVariant;\n  shape?: ShapeVariant;\n}) => {\n  const sizes = useSize(density);\n  const radius = useShape(shape);\n  return (\n    <Primitive\n      type={type}\n      data-slot=\"input\"\n      className={cn(\n        \"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm\",\n        \"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]\",\n        \"aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive\",\n        sizes.control,\n        sizes.px,\n        radius,\n        sizes.variant === \"compact\" && \"md:text-xs\",\n        className\n      )}\n      {...props}\n    />\n  );\n};\n\nexport { Input };\n",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    }
+  ],
+  "type": "registry:ui"
+}

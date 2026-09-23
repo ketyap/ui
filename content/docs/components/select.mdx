@@ -1,0 +1,65 @@
+---
+title: Select
+description: Bordered and borderless selection with groups and scrolling.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { SelectDemo } from "@/examples/components/select";
+import { SelectScrollDemo } from "@/examples/components/select-scroll";
+
+## Preview
+
+### Bordered and borderless
+
+<ComponentPreview src="examples/components/select.tsx">
+  <SelectDemo />
+</ComponentPreview>
+
+### Scrolling and compact size
+
+<ComponentPreview src="examples/components/select-scroll.tsx">
+  <SelectScrollDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/select.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/select.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/select.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/select.json`}
+/>
+
+## Usage
+
+```tsx
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+} from "@/components/ui/select";
+
+<Select
+  defaultValue="fiction"
+  items={{ fiction: "Fiction", science: "Science" }}
+>
+  <SelectTrigger aria-label="Genre">
+    <SelectValue placeholder="Choose a genre" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectItem value="fiction">Fiction</SelectItem>
+      <SelectItem value="science">Science</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>;
+```
+
+## API Reference
+
+Root and Value expose Base UI Select APIs. Use `items` to map values to labels before a popup has mounted. Trigger `variant`: bordered (default) or borderless; `icon`: SVG component; `density` and `shape` optionally override Foundations. Item accepts `icon`, `disabled`, and Base UI Item props. Content uses a scrollable list with a 300px maximum height and available viewport space. Place related items in SelectGroup; use SelectLabel for its heading.

@@ -1,0 +1,66 @@
+---
+title: DropdownMenu
+description: Actions, checkable items and submenus with fluid hover.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+
+import { DropdownMenuDemo } from "@/examples/components/dropdown-menu";
+import { DropdownMenuSelectionDemo } from "@/examples/components/dropdown-menu-selection";
+import { DropdownMenuSubmenuDemo } from "@/examples/components/dropdown-menu-submenu";
+
+## Preview
+
+### Actions and groups
+
+<ComponentPreview src="examples/components/dropdown-menu.tsx">
+  <DropdownMenuDemo />
+</ComponentPreview>
+
+### Checkbox and radio items
+
+<ComponentPreview src="examples/components/dropdown-menu-selection.tsx">
+  <DropdownMenuSelectionDemo />
+</ComponentPreview>
+
+### Submenu
+
+<ComponentPreview src="examples/components/dropdown-menu-submenu.tsx">
+  <DropdownMenuSubmenuDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/dropdown-menu.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/dropdown-menu.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/dropdown-menu.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/dropdown-menu.json`}
+/>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+<DropdownMenu>
+  <DropdownMenuTrigger render={<Button />}>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuGroup>
+      <DropdownMenuItem>New book</DropdownMenuItem>
+    </DropdownMenuGroup>
+  </DropdownMenuContent>
+</DropdownMenu>;
+```
+
+## API Reference
+
+Root accepts Base UI Menu props, including controlled `open` and `onOpenChange`. Content supports `side`, `align`, `sideOffset` (6px), `alignOffset`, `collisionPadding`, and `anchor`. Exports include Group, Label, Item, Shortcut, Separator, CheckboxItem, RadioGroup, RadioItem, Sub, SubTrigger and SubContent. Items support `disabled`; regular items also support `variant="destructive"`. Shortcuts are display hints, not global key bindings. Base UI owns dismiss, focus restoration and submenu navigation.

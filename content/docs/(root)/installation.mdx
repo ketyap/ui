@@ -1,0 +1,47 @@
+---
+title: Installation
+description: Add Ketyap UI components to your React project.
+---
+
+## Set up shadcn
+
+Initialize shadcn in your React project if you have not already:
+
+```bash
+npx shadcn@latest init
+```
+
+Choose a Base UI style. Ketyap UI uses `@base-ui/react` for interactive primitives.
+
+## Add a component
+
+Run the installation command on a component's documentation page, or add Button directly:
+
+```bash
+npx shadcn@latest add https://ui.ketyap.me/r/button.json
+```
+
+The registry includes the Foundation and Hook files each component needs, along with its npm dependencies.
+
+## Use it
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+export const Demo = () => <Button variant="primary">Save changes</Button>;
+```
+
+The installed source belongs to your project. Adjust it to your needs.
+
+## Develop Ketyap UI
+
+Clone [ketyap/ui](https://github.com/ketyap/ui), install dependencies, and start the documentation site:
+
+```bash
+git clone https://github.com/ketyap/ui.git
+cd ui
+pnpm install
+pnpm dev
+```
+
+Run `pnpm build` to build the registry and documentation together.

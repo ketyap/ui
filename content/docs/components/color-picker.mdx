@@ -1,0 +1,41 @@
+---
+title: ColorPicker
+description: Visual color selection with HEX editing and validation.
+---
+
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { SITE } from "@/constants/site";
+import { ColorPickerDemo } from "@/examples/components/color-picker";
+
+## Preview
+
+<ComponentPreview src="examples/components/color-picker.tsx">
+  <ColorPickerDemo />
+</ComponentPreview>
+
+## Installation
+
+<CodeBlockCommand
+  __npm__={`npx shadcn@latest add ${SITE.URL}/r/color-picker.json`}
+  __pnpm__={`pnpm dlx shadcn@latest add ${SITE.URL}/r/color-picker.json`}
+  __yarn__={`yarn dlx shadcn@latest add ${SITE.URL}/r/color-picker.json`}
+  __bun__={`bunx shadcn@latest add ${SITE.URL}/r/color-picker.json`}
+/>
+
+## Usage
+
+```tsx
+import { ColorPicker } from "@/components/ui/color-picker";
+
+<ColorPicker defaultValue="#6B97FF" />;
+```
+
+## API Reference
+
+`value` / `defaultValue`: a 3 or 6 digit HEX color. `onValueChange` receives normalized 6 digit HEX values while dragging or after a HEX edit. `onValueCommit` fires after a slider gesture, a swatch selection, or a changed HEX value is confirmed with Enter or blur. Invalid HEX text is marked while editing and reverts on confirmation.
+
+`swatches`: an array of `{ name, value }` colors; pass `[]` to hide presets. `size`: default or compact, otherwise inherited. `disabled` disables interaction. `aria-label` names the picker. `className` styles the trigger wrapper.
+
+Open the picker to drag the color plane and hue slider. Tab to saturation, brightness, hue, HEX, or suggested colors; use arrow keys on sliders and the swatch grid, and Enter or Space to select a swatch. Escape closes the popup and returns focus to the trigger. The color plane uses Base UI Slider for both keyboard axes. Button, Input, and Popover inherit the existing size, shape, icon, motion, and surface foundations.
+
+The screen eyedropper appears beside HEX when the browser supports EyeDropper. Canceling it leaves the color unchanged. The layout and 18-color palette follow [Blode UI Color Picker](https://blode.co/ui/docs/components/color-picker), composed with Ketyap UI foundations.

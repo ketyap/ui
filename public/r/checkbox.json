@@ -1,0 +1,64 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "title": "Checkbox",
+  "description": "Standalone checkbox with Base UI and Ketyap UI foundations.",
+  "dependencies": [
+    "@base-ui/react@^1.8.0",
+    "motion@13.4.0"
+  ],
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/checkbox.tsx",
+      "content": "\"use client\";\n\nimport { Checkbox as Primitive } from \"@base-ui/react/checkbox\";\nimport { motion } from \"motion/react\";\nimport { useId } from \"react\";\nimport type { ComponentProps, ReactNode } from \"react\";\n\nimport { RenderSpan } from \"@/components/ui/render-element\";\nimport { useReducedMotion } from \"@/hooks/use-reduced-motion\";\nimport { motionTransition, spring } from \"@/lib/motion\";\nimport { useShape } from \"@/lib/shape-context\";\nimport { useSize } from \"@/lib/size-context\";\nimport type { SizeVariant } from \"@/lib/size-context\";\nimport { cn } from \"@/lib/utils\";\n\nexport type CheckboxProps = Omit<\n  ComponentProps<typeof Primitive.Root>,\n  \"className\"\n> & {\n  className?: string;\n  size?: SizeVariant;\n};\n\nexport const Checkbox = ({ size, className, ...props }: CheckboxProps) => {\n  const sizes = useSize(size);\n  const reduced = useReducedMotion();\n  return (\n    <Primitive.Root\n      data-slot=\"checkbox\"\n      className={cn(\n        \"relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded border border-input outline-none transition-colors duration-(--motion-fast) focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:border-destructive aria-invalid:ring-destructive/20 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 motion-reduce:transition-none\",\n        sizes.variant === \"compact\" ? \"size-3.5\" : \"size-4\",\n        className\n      )}\n      {...props}\n    >\n      <Primitive.Indicator\n        keepMounted\n        aria-hidden=\"true\"\n        className=\"pointer-events-none relative flex size-full items-center justify-center\"\n        render={(indicatorProps, state) => (\n          <span {...indicatorProps}>\n            <svg\n              width={sizes.icon}\n              height={sizes.icon}\n              viewBox=\"0 0 24 24\"\n              fill=\"none\"\n              stroke=\"currentColor\"\n              strokeWidth={2}\n              strokeLinecap=\"round\"\n              strokeLinejoin=\"round\"\n              aria-hidden=\"true\"\n              focusable=\"false\"\n            >\n              <motion.path\n                d=\"M4 12 9 17 20 6\"\n                initial={false}\n                animate={{\n                  opacity: state.checked && !state.indeterminate ? 1 : 0,\n                  pathLength: state.checked && !state.indeterminate ? 1 : 0,\n                }}\n                transition={motionTransition(spring.slow, reduced)}\n              />\n            </svg>\n            <motion.span\n              className=\"absolute h-0.5 w-2 rounded-full bg-current\"\n              initial={false}\n              animate={{\n                opacity: state.indeterminate ? 1 : 0,\n                scaleX: state.indeterminate ? 1 : 0,\n              }}\n              transition={motionTransition(spring.moderate, reduced)}\n            />\n          </span>\n        )}\n      />\n    </Primitive.Root>\n  );\n};\n\nexport const CheckboxItem = ({\n  label,\n  description,\n  className,\n  size: density,\n  render,\n  ...props\n}: ComponentProps<typeof Checkbox> & {\n  label: ReactNode;\n  description?: ReactNode;\n}) => {\n  const id = useId();\n  const size = useSize(density);\n  const shape = useShape();\n  return (\n    <Checkbox\n      size={density}\n      data-slot=\"checkbox-item\"\n      aria-labelledby={`${id}-label`}\n      aria-describedby={description ? `${id}-description` : undefined}\n      className={cn(\n        \"relative flex w-full cursor-pointer items-center justify-start border-0 text-left outline-none transition-colors duration-(--motion-fast) data-[checked]:bg-foreground/5 data-[indeterminate]:bg-foreground/5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 [&[data-checked]:has(+input+[data-checked])]:rounded-b-none [&[data-checked]+input+[data-checked]]:rounded-t-none\",\n        size.px,\n        size.gap,\n        size.text,\n        shape,\n        description ? \"h-auto py-2\" : size.control,\n        className\n      )}\n      render={(checkboxProps, state) => (\n        <RenderSpan\n          {...checkboxProps}\n          render={\n            typeof render === \"function\"\n              ? (elementProps) => render(elementProps, state)\n              : render\n          }\n        >\n          <span\n            aria-hidden=\"true\"\n            className={cn(\n              \"flex shrink-0 items-center justify-center rounded border border-input\",\n              size.variant === \"compact\" ? \"size-3.5\" : \"size-4\"\n            )}\n          >\n            {checkboxProps.children}\n          </span>\n          <span className=\"flex min-w-0 flex-col\">\n            <span id={`${id}-label`}>{label}</span>\n            {description && (\n              <span\n                id={`${id}-description`}\n                className=\"text-xs text-muted-foreground\"\n              >\n                {description}\n              </span>\n            )}\n          </span>\n        </RenderSpan>\n      )}\n      {...props}\n    />\n  );\n};\n",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox.tsx"
+    },
+    {
+      "path": "lib/size-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type SizeVariant = \"default\" | \"compact\";\nconst SizeContext = createContext<SizeVariant>(\"default\");\nexport const sizeMap = {\n  compact: {\n    control: \"h-7\",\n    controlHeight: 28,\n    gap: \"gap-1\",\n    icon: 14,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-3.5\",\n    px: \"px-2.5\",\n    text: \"text-xs\",\n    variant: \"compact\",\n  },\n  default: {\n    control: \"h-9\",\n    controlHeight: 36,\n    gap: \"gap-2\",\n    icon: 16,\n    iconClass: \"[&_svg:not([class*='size-'])]:size-4\",\n    px: \"px-3\",\n    text: \"text-[13px]\",\n    variant: \"default\",\n  },\n} as const;\nexport const SizeProvider = ({\n  size,\n  children,\n}: {\n  size: SizeVariant;\n  children: ReactNode;\n}) => <SizeContext.Provider value={size}>{children}</SizeContext.Provider>;\nexport const useSizeVariant = (override?: SizeVariant) => {\n  const inherited = useContext(SizeContext);\n  return override ?? inherited;\n};\nexport const useSize = (override?: SizeVariant) =>\n  sizeMap[useSizeVariant(override)];\n",
+      "type": "registry:lib",
+      "target": "lib/size-context.tsx"
+    },
+    {
+      "path": "lib/motion.ts",
+      "content": "import type { Transition } from \"motion/react\";\n\n// Base UI owns presence; CSS consumers use the same timing ladder as Motion.\nexport const motionClasses = {\n  moderate:\n    \"duration-(--motion-moderate) data-[state=closed]:duration-(--motion-exit-moderate) motion-reduce:animate-none\",\n  slow: \"duration-(--motion-slow) data-[state=closed]:duration-(--motion-exit-slow) motion-reduce:animate-none\",\n};\n\n// Fluid Functionalism's timing ladder: quick feedback, precise panels, larger moves.\nexport const spring = {\n  fast: { bounce: 0, duration: 0.08, exit: { duration: 0.06 }, type: \"spring\" },\n  moderate: {\n    bounce: 0,\n    duration: 0.16,\n    exit: { duration: 0.12 },\n    type: \"spring\",\n  },\n  slow: {\n    bounce: 0.12,\n    duration: 0.24,\n    exit: { duration: 0.16 },\n    type: \"spring\",\n  },\n} as const;\n\nexport const motionPresets = {\n  activeIndicator: spring.moderate,\n  enter: {\n    animate: { opacity: 1, scale: 1 },\n    initial: { opacity: 0, scale: 0.95 },\n    transition: spring.moderate,\n  },\n  exit: { opacity: 0, scale: 0.95, transition: spring.moderate.exit },\n  fade: { duration: spring.fast.duration },\n  hover: spring.fast,\n  layout: spring.moderate,\n  snap: { duration: 0 },\n} satisfies Record<string, unknown>;\n\nexport const motionTransition = (\n  transition: Transition,\n  reduced: boolean\n): Transition =>\n  reduced ? { duration: 0, opacity: motionPresets.fade } : transition;\n",
+      "type": "registry:lib",
+      "target": "lib/motion.ts"
+    },
+    {
+      "path": "hooks/use-reduced-motion.ts",
+      "content": "\"use client\";\n\nimport { useMediaQuery } from \"@/hooks/use-media-query\";\n\n/** False during SSR and the first hydration render; subscribes after mounting. */\nexport const useReducedMotion = () =>\n  useMediaQuery(\"(prefers-reduced-motion: reduce)\");\n",
+      "type": "registry:hook",
+      "target": "hooks/use-reduced-motion.ts"
+    },
+    {
+      "path": "hooks/use-media-query.tsx",
+      "content": "import { useEffect, useState } from \"react\";\n\nexport const useMediaQuery = (query: string) => {\n  const [value, setValue] = useState(false);\n\n  useEffect(() => {\n    const onChange = (event: MediaQueryListEvent) => {\n      setValue(event.matches);\n    };\n\n    const result = matchMedia(query);\n    result.addEventListener(\"change\", onChange);\n    setValue(result.matches);\n\n    return () => result.removeEventListener(\"change\", onChange);\n  }, [query]);\n\n  return value;\n};\n",
+      "type": "registry:hook",
+      "target": "hooks/use-media-query.tsx"
+    },
+    {
+      "path": "lib/shape-context.tsx",
+      "content": "\"use client\";\n\nimport { createContext, useContext } from \"react\";\nimport type { ReactNode } from \"react\";\n\nexport type ShapeVariant = \"rounded\" | \"pill\";\nconst ShapeContext = createContext<ShapeVariant>(\"rounded\");\nexport const shapeMap = {\n  pill: \"rounded-[20px]\",\n  rounded: \"rounded-lg\",\n} as const;\nexport const ShapeProvider = ({\n  shape,\n  children,\n}: {\n  shape: ShapeVariant;\n  children: ReactNode;\n}) => <ShapeContext.Provider value={shape}>{children}</ShapeContext.Provider>;\nexport const useShape = (override?: ShapeVariant) => {\n  const inherited = useContext(ShapeContext);\n  return shapeMap[override ?? inherited];\n};\n",
+      "type": "registry:lib",
+      "target": "lib/shape-context.tsx"
+    },
+    {
+      "path": "components/ui/render-element.tsx",
+      "content": "\"use client\";\n\nimport { useRender } from \"@base-ui/react/use-render\";\n\nexport const RenderDiv = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"div\">) =>\n  useRender({ defaultTagName: \"div\", props, render });\nexport const RenderSpan = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"span\">) =>\n  useRender({ defaultTagName: \"span\", props, render });\nexport const RenderAnchor = ({\n  render,\n  ...props\n}: useRender.ComponentProps<\"a\">) =>\n  useRender({ defaultTagName: \"a\", props, render });\n",
+      "type": "registry:ui",
+      "target": "components/ui/render-element.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "motion-fast": "80ms",
+      "motion-moderate": "160ms"
+    }
+  },
+  "type": "registry:ui"
+}
