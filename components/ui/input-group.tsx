@@ -64,7 +64,11 @@ export const InputField = ({
       className={cn("flex flex-col gap-1", sizes.text, className)}
     >
       <Field.Label
-        className={cn("px-2.5 text-muted-foreground", labelHidden && "sr-only")}
+        className={cn(
+          sizes.px,
+          "text-muted-foreground",
+          labelHidden && "sr-only"
+        )}
       >
         {label}
       </Field.Label>
@@ -79,6 +83,7 @@ export const InputField = ({
             className={cn(
               "flex shrink-0 items-center text-muted-foreground",
               sizes.px,
+              "pe-0",
               sizes.gap,
               sizes.iconClass
             )}
@@ -90,11 +95,18 @@ export const InputField = ({
         <Input
           density={density}
           shape={shape}
-          className="rounded-none border-0 shadow-none focus-visible:ring-0"
+          className={cn(
+            "rounded-none border-0 shadow-none focus-visible:ring-0",
+            (prefix || FieldIcon) &&
+              (sizes.variant === "compact" ? "ps-1" : "ps-2"),
+            suffix && (sizes.variant === "compact" ? "pe-1" : "pe-2")
+          )}
           {...props}
         />
         {suffix && (
-          <span className={cn("shrink-0 text-muted-foreground", sizes.px)}>
+          <span
+            className={cn("shrink-0 text-muted-foreground", sizes.px, "ps-0")}
+          >
             {suffix}
           </span>
         )}
@@ -110,12 +122,14 @@ export const InputField = ({
         )}
       </div>
       {description && (
-        <Field.Description className="px-2.5 text-xs text-muted-foreground">
+        <Field.Description
+          className={cn(sizes.px, "text-xs text-muted-foreground")}
+        >
           {description}
         </Field.Description>
       )}
       {error && (
-        <Field.Error match className="px-2.5 text-xs text-destructive">
+        <Field.Error match className={cn(sizes.px, "text-xs text-destructive")}>
           {error}
         </Field.Error>
       )}

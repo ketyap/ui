@@ -66,20 +66,15 @@ export const Slider = ({
 
   useEffect(() => () => stretch.stop(), [stretch]);
 
-  const animateStretch = (distance: number, returning = false) => {
+  const animateStretch = (distance: number) => {
     if (target.current === distance) {
       return;
     }
     target.current = distance;
-    animate(stretch, distance, {
-      ...spring.slow,
-      duration: returning ? 0.4 : spring.slow.duration,
-      restDelta: 0.001,
-      restSpeed: 0.01,
-    });
+    animate(stretch, distance, spring.moderate);
   };
 
-  const releaseStretch = () => animateStretch(0, true);
+  const releaseStretch = () => animateStretch(0);
 
   const fraction = (value: number) =>
     max > min ? Math.max(0, Math.min(1, (value - min) / (max - min))) : 0;

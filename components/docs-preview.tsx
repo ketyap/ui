@@ -1,6 +1,7 @@
 "use client";
 import type { ReactNode } from "react";
 
+import { PreviewStyle } from "@/components/preview-preferences";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const DocsPreview = ({
@@ -12,6 +13,7 @@ export const DocsPreview = ({
 }) => (
   <Tabs
     data-docs-preview
+    variant="subtle"
     defaultValue="preview"
     className="not-prose my-6 min-w-0"
   >
@@ -23,7 +25,7 @@ export const DocsPreview = ({
       value="preview"
       className="min-w-0 rounded-xl border p-6 md:p-8"
     >
-      {children}
+      <PreviewStyle>{children}</PreviewStyle>
     </TabsContent>
     <TabsContent value="code" className="min-w-0">
       {code}

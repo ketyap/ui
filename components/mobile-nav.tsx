@@ -3,9 +3,10 @@
 import type { Root as PageTreeRoot } from "fumadocs-core/page-tree";
 import type { LinkProps } from "next/link";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
+import { PreviewPreferenceFields } from "@/components/preview-preferences";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -86,6 +87,7 @@ export const MobileNav = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <Popover sounds open={open} onOpenChange={setOpen}>
@@ -122,7 +124,7 @@ export const MobileNav = ({
         }
       />
       <PopoverContent
-        className="bg-background/90 no-scrollbar h-(--available-height) w-(--available-width) overflow-y-auto rounded-none border-none p-0 shadow-none backdrop-blur duration-100"
+        className="bg-background/90! no-scrollbar h-(--available-height) w-(--available-width) overflow-y-auto rounded-none border-none p-0 shadow-none! ring-0! backdrop-blur duration-100"
         align="start"
         side="bottom"
         alignOffset={-16}
@@ -148,6 +150,19 @@ export const MobileNav = ({
               ))}
             </div>
           </div>
+          {pathname.startsWith(ROUTES.DOCS_COMPONENTS) && (
+            <div className="flex flex-col gap-6 border-t pt-6">
+              {pathname !== ROUTES.DOCS_COMPONENTS && (
+                <MobileLink
+                  href={ROUTES.DOCS_COMPONENTS}
+                  onOpenChange={setOpen}
+                >
+                  All previews
+                </MobileLink>
+              )}
+              <PreviewPreferenceFields />
+            </div>
+          )}
           {tree.children.map((item) => {
             if (item.type !== "folder") {
               return null;

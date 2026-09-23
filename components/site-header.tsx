@@ -7,6 +7,7 @@ import { MainNav } from "@/components/main-nav";
 import { MobileNav } from "@/components/mobile-nav";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { NavItemGithub } from "@/components/nav-item-github";
+import { PreviewHeaderControls } from "@/components/preview-preferences";
 import { SiteSettings } from "@/components/site-settings";
 import { SponsorLink } from "@/components/sponsor-link";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,7 @@ export const SiteHeader = () => (
           </div>
           <NavItemGithub />
           <SponsorLink />
+          <PreviewHeaderControls />
           <ModeSwitcher />
           <SiteSettings />
         </div>

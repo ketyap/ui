@@ -173,7 +173,7 @@ const TabsTrigger = ({
           )}
         />
       )}
-      {children}
+      <span className="contents">{children}</span>
     </TabsPrimitive.Tab>
   );
 };
